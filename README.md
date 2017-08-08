@@ -2,10 +2,10 @@
 
 # brytescore-ios
 
-[![Build Status](http://img.shields.io/travis/Brytecore/brytescore-ios.svg?branch=master?style=flat)](https://travis-ci.org/Brytecore/brytescore-ios)
-[![Version](https://img.shields.io/cocoapods/v/brytescore-ios.svg?style=flat)](http://cocoapods.org/pods/brytescore-ios)
-[![License](https://img.shields.io/cocoapods/l/brytescore-ios.svg?style=flat)](http://cocoapods.org/pods/brytescore-ios)
-[![Platform](https://img.shields.io/cocoapods/p/brytescore-ios.svg?style=flat)](http://cocoapods.org/pods/brytescore-ios)
+[![Build Status](http://img.shields.io/travis/Brytecore/BrytescoreAPI.svg?branch=master?style=flat)](https://travis-ci.org/Brytecore/BrytescoreAPI)
+[![Version](https://img.shields.io/cocoapods/v/BrytescoreAPI.svg?style=flat)](http://cocoapods.org/pods/BrytescoreAPI)
+[![License](https://img.shields.io/cocoapods/l/BrytescoreAPI.svg?style=flat)](http://cocoapods.org/pods/BrytescoreAPI)
+[![Platform](https://img.shields.io/cocoapods/p/BrytescoreAPI.svg?style=flat)](http://cocoapods.org/pods/BrytescoreAPI)
 
 brytescore-ios is the open-source iOS SDK that connects your website with the Brytescore API. The
 Brytescore API allows you to track your users' behavior and score their engagement.
