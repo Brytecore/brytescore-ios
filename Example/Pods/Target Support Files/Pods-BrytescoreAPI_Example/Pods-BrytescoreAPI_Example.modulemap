@@ -1,0 +1,6 @@
+framework module Pods_BrytescoreAPI_Example {
+  umbrella header "Pods-BrytescoreAPI_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'BrytescoreAPI_Example' do
+  pod 'BrytescoreAPI', :path => '../'
+
+  target 'BrytescoreAPI_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
