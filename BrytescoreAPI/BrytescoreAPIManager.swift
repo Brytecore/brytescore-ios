@@ -15,6 +15,7 @@ public class BrytescoreAPIManager {
     private var library = "iOS"
     private var libraryVersion = "0.0.0"
     private var schemaVersion = ["analytics": "0.3.1"]
+    private var devMode = false
 
 
     // --------------------------------- MARK: public functions: -------------------------------- //
@@ -35,6 +36,16 @@ public class BrytescoreAPIManager {
     }
 
     /**
+     * Sets dev mode.
+     * Logs events to the console instead of sending to the API.
+     *
+     * @param {boolean} enabled If true, then dev mode is enabled.
+     */
+    public func devMode(enabled: Bool) {
+        devMode = enabled
+    }
+
+    /**
      * Start a pageView.
      *
      * @param {object} data The pageView data.
@@ -44,7 +55,7 @@ public class BrytescoreAPIManager {
      * @param {string} data.referrer
      */
     public func pageView(data: Dictionary<String, Any>) {
-        print("Calling pageView \(data)")
+        print("Calling pageView: \(data)")
         self.track(eventName: pageViewEventName, eventDisplayName: "Viewed a Page", data: data)
     }
 
@@ -59,7 +70,7 @@ public class BrytescoreAPIManager {
      * @param {boolean} data.isImpersonating
      */
     private func track(eventName: String, eventDisplayName: String, data: Dictionary<String, Any>) {
-        print("Calling track \(eventName) \(eventDisplayName) \(data)")
+        print("Calling track: \(eventName) \(eventDisplayName) \(data)")
         self.sendRequest(path: "track", eventName: eventName, eventDisplayName: eventDisplayName, data: data)
     }
 
@@ -116,48 +127,52 @@ public class BrytescoreAPIManager {
         let session = URLSession(configuration: URLSessionConfiguration.default)
 
         // Execute the request
-        let task = session.dataTask(with: request) {
-            (data, response, error) in
+        if (devMode == true) {
+            print("Dev mode enabled: \(eventData)")
+        } else {
+            let task = session.dataTask(with: request) {
+                (data, response, error) in
 
 
-            // Check for any explicit errors
-            guard error == nil else {
-                print("An error occurred while calling", requestEndpoint, error as Any)
-                return
-            }
-
-            // Retrieve the HTTP response status code, check that it exists
-            let httpResponse = response as? HTTPURLResponse
-            guard let st = httpResponse?.statusCode else{
-                return
-            }
-
-            // Check that the response was not a 404 or 500 TODO should handle errors more gracefully
-            guard st != 404 && st != 500 else {
-                print("An error occurred while calling", requestEndpoint, st)
-                return
-            }
-
-            // Check that data was received from the API
-             guard let responseData = data else {
-                print("An error occurred: did not receive data")
-                return
-            }
-
-            // Parse the API response data
-            do {
-                guard let responseJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: AnyObject] else {
-                    print("error trying to convert data to JSON")
+                // Check for any explicit errors
+                guard error == nil else {
+                    print("An error occurred while calling:", requestEndpoint, error as Any)
                     return
                 }
-                print("Call successful, response: \(responseJSON)")
-            } catch  {
-                print("An error occured while trying to convert data to JSON")
-                return
-            }
-        }
 
-        task.resume()
+                // Retrieve the HTTP response status code, check that it exists
+                let httpResponse = response as? HTTPURLResponse
+                guard let st = httpResponse?.statusCode else{
+                    return
+                }
+
+                // Check that the response was not a 404 or 500 TODO should handle errors more gracefully
+                guard st != 404 && st != 500 else {
+                    print("An error occurred while calling:", requestEndpoint, st)
+                    return
+                }
+
+                // Check that data was received from the API
+                guard let responseData = data else {
+                    print("An error occurred: did not receive data")
+                    return
+                }
+
+                // Parse the API response data
+                do {
+                    guard let responseJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: AnyObject] else {
+                        print("error trying to convert data to JSON")
+                        return
+                    }
+                    print("Call successful, response: \(responseJSON)")
+                } catch  {
+                    print("An error occured while trying to convert data to JSON")
+                    return
+                }
+            }
+
+            task.resume()
+        }
     }
 
 }

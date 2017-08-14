@@ -20,6 +20,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Enable debug mode
+        _apiManager.devMode(enabled: true)
+        
         // Update the API Key label to show our API key for debugging
         apiKeyLabel.text = "\(defaultAPIKeyLabel) \(_apiManager.getAPIKey())"
     }
