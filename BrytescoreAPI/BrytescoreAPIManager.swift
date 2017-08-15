@@ -15,6 +15,8 @@ public class BrytescoreAPIManager {
     private var library = "iOS"
     private var libraryVersion = "0.0.0"
     private var schemaVersion = ["analytics": "0.3.1"]
+    private var userId : String?  = nil
+    private var anonymousId : String? = nil
     private var devMode = false
 
 
@@ -58,6 +60,58 @@ public class BrytescoreAPIManager {
         print("Calling pageView: \(data)")
         self.track(eventName: pageViewEventName, eventDisplayName: "Viewed a Page", data: data)
     }
+
+    /**
+     * Sends a new account registration event.
+     *
+     * @param {object} data The registration data.
+     * @param {boolean} data.isImpersonating
+     * @param {integer} data.userAccount.id
+     */
+     public func registeredAccount(data: Dictionary<String, AnyObject>) {
+        print("Calling registeredAccount: \(data)")
+
+        // TODO handle impersonating
+        // If the user is being impersonated, do not track.
+
+        // Ensure that we have a user ID
+        guard let localUserID: String = data["userAccount"]?["id"] as! String else {
+            print("data.userAccount.id is not defined")
+            return
+        }
+
+        // If we haven't saved the user ID globally, or the user IDs do not match
+        // Do some things (TODO: doc)
+        if (userId == "" || localUserID != userId) {
+            // Retrieve user ID from brytescore_uu
+            // TODO: actually pull from localstorage
+            // guard let bc = ["aid": "userfromlocalstorage"] !== nil else {
+            //     let bc = [:]
+            // }
+            let bc = ["aid": "userfromlocalstorage"]
+
+            // Save our new user ID to our global userId
+            userId = localUserID
+
+            if (bc != [:]) {
+                anonymousId = bc["aid"]
+            } else {
+                anonymousId = "generatedUUID" // TODO: actually generate UUID
+            }
+
+            let localstorageData = [
+                "aid": anonymousId,
+                "uid": userId,
+                "expiry": "SOME DATE" // TODO: set date? do we need this?
+            ]
+
+            // TODO: save localstorageData
+            print("TODO: save me: \(localstorageData)")
+        }
+
+        // Finally, in any case, track the account registration
+        self.track(eventName: "registeredAccount", eventDisplayName: "Created a new account", data: data)
+     }
 
 
     // --------------------------------- MARK: private functions -------------------------------- //
