@@ -20,7 +20,7 @@ public class BrytescoreAPIManager {
     private var devMode = false
 
 
-    // --------------------------------- MARK: public functions: -------------------------------- //
+    // ---------------------------------- MARK: public methods: --------------------------------- //
     /**
      * Sets the API key.
      *
@@ -74,12 +74,11 @@ public class BrytescoreAPIManager {
         // TODO handle impersonating
         // If the user is being impersonated, do not track.
 
-        // Ensure that we have a user ID
+        // Ensure that we have a user ID from data.userAccount.id
         guard let userAccount = data["userAccount"] else {
             print("data.userAccount is not defined")
             return
         }
-
         guard let localUserID: Int = userAccount["id"] as? Int else {
             print("data.userAccount.id is not defined")
             return
@@ -119,7 +118,7 @@ public class BrytescoreAPIManager {
      }
 
 
-    // --------------------------------- MARK: private functions -------------------------------- //
+    // ---------------------------------- MARK: private methods --------------------------------- //
     /**
      * Main track function
      *
@@ -145,19 +144,22 @@ public class BrytescoreAPIManager {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
-        // Generate the object to send to the API
-        // "event"              - param     - eventName
-        // "eventDisplayName"   - param     - eventDisplayName
-        // "hostName" - static  - static    - custom iOS hostname
-        // "apiKey"             - static    - user's API key
-        // "anonymousId"        - generated - Brytescore UID
-        // "userId"             - retrieved - Client user id, may be null if unauthenticated
-        // "pageViewId"         - generated - Brytescore UID            // TODO: Q: difference btwn pageViewId/anonymousId?
-        // "sessionId"          - generated - Brytescore session id     // TODO: Q: difference btwn sessionId/pageViewId/anonymousId?
-        // "library"            - static    - library type
-        // "libraryVersion"     - static    - library version
-        // "schemaVersion"      - generated - if eventName contains '.', use a custom schemaVersion based on the eventName. otherwise, use schemaVersion.analytics
-        // "data"               - param     - data
+        /**
+         * Generate the object to send to the API
+         *
+         * "event"              - param     - eventName
+         * "eventDisplayName"   - param     - eventDisplayName
+         * "hostName" - static  - static    - custom iOS hostname
+         * "apiKey"             - static    - user's API key
+         * "anonymousId"        - generated - Brytescore UID
+         * "userId"             - retrieved - Client user id, may be null if unauthenticated
+         * "pageViewId"         - generated - Brytescore UID            // TODO: Q: difference btwn pageViewId/anonymousId?
+         * "sessionId"          - generated - Brytescore session id     // TODO: Q: difference btwn sessionId/pageViewId/anonymousId?
+         * "library"            - static    - library type
+         * "libraryVersion"     - static    - library version
+         * "schemaVersion"      - generated - if eventName contains '.', use a custom schemaVersion based on the eventName. otherwise, use schemaVersion.analytics
+         * "data"               - param     - data
+         */
         let eventData = [
             "event": eventName,
             "eventDisplayName": eventDisplayName,
@@ -172,8 +174,6 @@ public class BrytescoreAPIManager {
             "schemaVersion": schemaVersion["analytics"]!, // TODO: Q: i don't think this is a thing. check for '.' (see docstring above)
             "data": data
         ] as [String : Any]
-
-        print(eventData)
 
         // Set up the request body
         do {
@@ -191,7 +191,6 @@ public class BrytescoreAPIManager {
         } else {
             let task = session.dataTask(with: request) {
                 (data, response, error) in
-
 
                 // Check for any explicit errors
                 guard error == nil else {
