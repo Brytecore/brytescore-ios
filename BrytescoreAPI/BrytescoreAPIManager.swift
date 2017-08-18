@@ -15,7 +15,7 @@ public class BrytescoreAPIManager {
     private var library = "iOS"
     private var libraryVersion = "0.0.0"
     private var schemaVersion = ["analytics": "0.3.1"]
-    private var userId : String?  = nil
+    private var userId : Int?  = nil
     private var anonymousId : String? = nil
     private var devMode = false
 
@@ -75,14 +75,19 @@ public class BrytescoreAPIManager {
         // If the user is being impersonated, do not track.
 
         // Ensure that we have a user ID
-        guard let localUserID: String = data["userAccount"]?["id"] as! String else {
+        guard let userAccount = data["userAccount"] else {
+            print("data.userAccount is not defined")
+            return
+        }
+
+        guard let localUserID: Int = userAccount["id"] as? Int else {
             print("data.userAccount.id is not defined")
             return
         }
 
         // If we haven't saved the user ID globally, or the user IDs do not match
         // Do some things (TODO: doc)
-        if (userId == "" || localUserID != userId) {
+        if (userId == nil || localUserID != userId) {
             // Retrieve user ID from brytescore_uu
             // TODO: actually pull from localstorage
             // guard let bc = ["aid": "userfromlocalstorage"] !== nil else {
@@ -99,10 +104,10 @@ public class BrytescoreAPIManager {
                 anonymousId = "generatedUUID" // TODO: actually generate UUID
             }
 
-            let localstorageData = [
-                "aid": anonymousId,
-                "uid": userId,
-                "expiry": "SOME DATE" // TODO: set date? do we need this?
+            let localstorageData: Dictionary<String, AnyObject> = [
+                "aid": anonymousId as AnyObject,
+                "uid": userId as AnyObject,
+                "expiry": "SOME DATE" as AnyObject // TODO: set date? do we need this?
             ]
 
             // TODO: save localstorageData
