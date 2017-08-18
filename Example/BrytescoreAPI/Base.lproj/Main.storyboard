@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eEm-4J-MYS">
-                                <rect key="frame" x="16" y="40" width="343" height="166.5"/>
+                                <rect key="frame" x="16" y="40" width="343" height="204.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brytescore API Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LDZ-Yr-gtP">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -62,6 +62,16 @@
                                             <action selector="trackRegisteredAccount:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="g70-GN-3I7"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGW-if-6S0">
+                                        <rect key="frame" x="0.0" y="174.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Toggle Dev Mode: Turn On"/>
+                                        <connections>
+                                            <action selector="toggleDevMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Lwv-8d-1Hm"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -74,6 +84,7 @@
                     </view>
                     <connections>
                         <outlet property="apiKeyLabel" destination="5dD-I6-X8l" id="Jqz-LM-lvO"/>
+                        <outlet property="toggleDevModeButton" destination="vGW-if-6S0" id="74f-GO-G6K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
