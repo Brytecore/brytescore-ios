@@ -186,15 +186,14 @@ public class BrytescoreAPIManager {
         let session = URLSession(configuration: URLSessionConfiguration.default)
 
         // Execute the request
-        if (devMode == true) {
-            print("Dev mode enabled: \(eventData)")
-        } else {
+        print(eventData)
+        if (devMode != true) {
             let task = session.dataTask(with: request) {
                 (data, response, error) in
 
                 // Check for any explicit errors
                 guard error == nil else {
-                    print("An error occurred while calling:", requestEndpoint, error as Any)
+                    self.print("An error occurred while calling:", requestEndpoint, error as Any)
                     return
                 }
 
@@ -206,25 +205,25 @@ public class BrytescoreAPIManager {
 
                 // Check that the response was not a 404 or 500 TODO should handle errors more gracefully
                 guard st != 404 && st != 500 else {
-                    print("An error occurred while calling:", requestEndpoint, st)
+                    self.print("An error occurred while calling:", requestEndpoint, st)
                     return
                 }
 
                 // Check that data was received from the API
                 guard let responseData = data else {
-                    print("An error occurred: did not receive data")
+                    self.print("An error occurred: did not receive data")
                     return
                 }
 
                 // Parse the API response data
                 do {
                     guard let responseJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: AnyObject] else {
-                        print("error trying to convert data to JSON")
+                        self.print("error trying to convert data to JSON")
                         return
                     }
-                    print("Call successful, response: \(responseJSON)")
+                    self.print("Call successful, response: \(responseJSON)")
                 } catch  {
-                    print("An error occured while trying to convert data to JSON")
+                    self.print("An error occured while trying to convert data to JSON")
                     return
                 }
             }
@@ -232,5 +231,10 @@ public class BrytescoreAPIManager {
             task.resume()
         }
     }
-
+    
+    func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+        if (devMode == true) {
+            Swift.print(items[0], separator:separator, terminator: terminator)
+        }
+    }
 }
