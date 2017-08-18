@@ -31,5 +31,10 @@ class ViewController: UIViewController {
     @IBAction func trackPageView(_ sender: UIButton) {
         _apiManager.pageView(data: [:])
     }
+    
+    @IBAction func trackRegisteredAccount(_ sender: UIButton) {
+        _apiManager.registeredAccount(data: ["isLead": false as AnyObject])
+    }
+    
 }
 
