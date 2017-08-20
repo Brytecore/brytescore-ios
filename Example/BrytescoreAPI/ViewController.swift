@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var toggleDevModeButton: UIButton!
     @IBOutlet weak var toggleDebugModeButton: UIButton!
 
+
     // ------------------------------------- MARK: Variables ------------------------------------ //
     // Initialize the API Manager with your API key.
     let _apiManager = BrytescoreAPIManager(apiKey: "107e322f-3410-4d5b-8f43-d2bad8141771")
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
     let blue = UIColor(red:0.15, green:0.66, blue:0.88, alpha:0.8)
     let green = UIColor(red:0.46, green:0.71, blue:0.24, alpha:0.8)
     let orange = UIColor(red:0.87, green:0.53, blue:0.20, alpha:0.8)
+
 
     // -------------------------------------- MARK: Methods ------------------------------------- //
     override func viewDidLoad() {
@@ -46,6 +48,7 @@ class ViewController: UIViewController {
         // Update the API Key label to show our API key for debugging
         apiKeyLabel.text = "\(defaultAPIKeyLabel) \(_apiManager.getAPIKey())"
     }
+
 
     // -------------------------------------- MARK: Actions ------------------------------------- //
     /**
@@ -68,7 +71,6 @@ class ViewController: UIViewController {
         _apiManager.registeredAccount(data: registrationData)
     }
 
-
     /**
      Toggle devMode bool, pass to _apiManager, update button title and color
 
@@ -86,7 +88,6 @@ class ViewController: UIViewController {
             toggleDebugModeButton.backgroundColor = orange
         }
     }
-
 
     /**
      Toggle debugMode bool, pass to _apiManager, update button title and color

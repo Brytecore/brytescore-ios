@@ -8,13 +8,16 @@
 
 public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
+    private let _url = "https://api.brytecore.com"
+    private let pageViewEventName = "pageView"
+    private let hostname = "com.brytecore.mobile"
+    private let library = "iOS"
+    private let libraryVersion = "0.0.0"
+    private let schemaVersion = ["analytics": "0.3.1"]
+
+
+    // --------------------------------- MARK: dynamic variables -------------------------------- //
     private var _apiKey = String()
-    private var _url = "https://api.brytecore.com"
-    private var pageViewEventName = "pageView"
-    private var hostname = "com.brytecore.mobile"
-    private var library = "iOS"
-    private var libraryVersion = "0.0.0"
-    private var schemaVersion = ["analytics": "0.3.1"]
     private var userId : Int?  = nil
     private var anonymousId : String? = nil
     private var devMode = false
