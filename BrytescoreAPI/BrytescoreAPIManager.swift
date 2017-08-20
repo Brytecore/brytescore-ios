@@ -198,7 +198,7 @@ public class BrytescoreAPIManager {
         let session = URLSession(configuration: URLSessionConfiguration.default)
 
         // Execute the request
-        print(eventData)
+        dump(eventData, name: "eventData")
         if (devMode != true) {
             let task = session.dataTask(with: request) {
                 (data, response, error) in
@@ -245,11 +245,20 @@ public class BrytescoreAPIManager {
     }
 
     /**
-     Override Swift's dump function to only print while in devMode
+     Override Swift's print function to only print while in debugMode
      */
     func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-        if (devMode == true) {
+        if (debugMode == true) {
             Swift.print(items[0], separator:separator, terminator: terminator)
+        }
+    }
+
+    /**
+     Override Swift's dump function to only print while in debugMode
+     */
+    func dump(_ item: Any..., name: String) {
+        if (debugMode == true) {
+            Swift.dump(item, name: name)
         }
     }
 }
