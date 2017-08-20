@@ -18,6 +18,7 @@ public class BrytescoreAPIManager {
     private var userId : Int?  = nil
     private var anonymousId : String? = nil
     private var devMode = false
+    private var debugMode = false
 
 
     // ---------------------------------- MARK: public methods: --------------------------------- //
@@ -42,11 +43,27 @@ public class BrytescoreAPIManager {
     /**
      Sets dev mode.
      Logs events to the console instead of sending to the API.
+     Turning on dev mode automatically triggers debug mode.
 
      - parameter enabled: If true, then dev mode is enabled.
      */
     public func devMode(enabled: Bool) {
         devMode = enabled
+
+        // If devMode is turned on, debugMode should be too.
+        if (devMode) {
+            self.debugMode(enabled: true)
+        }
+    }
+
+    /**
+     Sets debug mode.
+     Log events are suppressed when debug mode is off.
+
+     - parameter enabled: If true, then debug mode is enabled.
+     */
+    public func debugMode(enabled: Bool) {
+        debugMode = enabled
     }
 
     /**
