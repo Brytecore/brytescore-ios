@@ -22,39 +22,41 @@ public class BrytescoreAPIManager {
 
     // ---------------------------------- MARK: public methods: --------------------------------- //
     /**
-     * Sets the API key.
-     *
-     * @param {string} apiKey The API key.
+     Sets the API key.
+
+     - parameter apiKey: The API key.
      */
     public init(apiKey: String) {
         _apiKey = apiKey
     }
 
     /**
-     * Returns the current API key
+     Returns the current API key
+
+     - returns: The current API key
      */
     public func getAPIKey() -> String {
         return _apiKey
     }
 
     /**
-     * Sets dev mode.
-     * Logs events to the console instead of sending to the API.
-     *
-     * @param {boolean} enabled If true, then dev mode is enabled.
+     Sets dev mode.
+     Logs events to the console instead of sending to the API.
+
+     - parameter enabled: If true, then dev mode is enabled.
      */
     public func devMode(enabled: Bool) {
         devMode = enabled
     }
 
     /**
-     * Start a pageView.
-     *
-     * @param {object} data The pageView data.
-     * @param {boolean} data.isImpersonating
-     * @param {string} data.pageUrl
-     * @param {string} data.pageTitle
-     * @param {string} data.referrer
+     Start a pageView.
+
+     - parameter data: The pageView data.
+     - data.isImpersonating:
+     - data.pageUrl:
+     - data.pageTitle:
+     - data.referrer:
      */
     public func pageView(data: Dictionary<String, Any>) {
         print("Calling pageView: \(data)")
@@ -62,11 +64,11 @@ public class BrytescoreAPIManager {
     }
 
     /**
-     * Sends a new account registration event.
-     *
-     * @param {object} data The registration data.
-     * @param {boolean} data.isImpersonating
-     * @param {integer} data.userAccount.id
+     Sends a new account registration event.
+
+     - parameter data: The registration data.
+     - data.isImpersonating
+     - data.userAccount.id
      */
      public func registeredAccount(data: Dictionary<String, AnyObject>) {
         print("Calling registeredAccount: \(data)")
@@ -120,12 +122,11 @@ public class BrytescoreAPIManager {
 
     // ---------------------------------- MARK: private methods --------------------------------- //
     /**
-     * Main track function
-     *
-     * @param {string} eventName The event name.
-     * @param {string} eventDisplayName The event display name.
-     * @param {object} data The event data.
-     * @param {boolean} data.isImpersonating
+     Main track function
+
+     - parameter eventName: The event name.
+     - parameter eventDisplayName: The event display name.
+     - parameter data: The event data.
      */
     private func track(eventName: String, eventDisplayName: String, data: Dictionary<String, Any>) {
         print("Calling track: \(eventName) \(eventDisplayName) \(data)")
@@ -145,20 +146,20 @@ public class BrytescoreAPIManager {
         request.httpMethod = "POST"
 
         /**
-         * Generate the object to send to the API
-         *
-         * "event"              - param     - eventName
-         * "eventDisplayName"   - param     - eventDisplayName
-         * "hostName" - static  - static    - custom iOS hostname
-         * "apiKey"             - static    - user's API key
-         * "anonymousId"        - generated - Brytescore UID
-         * "userId"             - retrieved - Client user id, may be null if unauthenticated
-         * "pageViewId"         - generated - Brytescore UID            // TODO: Q: difference btwn pageViewId/anonymousId?
-         * "sessionId"          - generated - Brytescore session id     // TODO: Q: difference btwn sessionId/pageViewId/anonymousId?
-         * "library"            - static    - library type
-         * "libraryVersion"     - static    - library version
-         * "schemaVersion"      - generated - if eventName contains '.', use a custom schemaVersion based on the eventName. otherwise, use schemaVersion.analytics
-         * "data"               - param     - data
+         Generate the object to send to the API
+
+         - "event"              - param     - eventName
+         - "eventDisplayName"   - param     - eventDisplayName
+         - "hostName" - static  - static    - custom iOS hostname
+         - "apiKey"             - static    - user's API key
+         - "anonymousId"        - generated - Brytescore UID
+         - "userId"             - retrieved - Client user id, may be null if unauthenticated
+         - "pageViewId"         - generated - Brytescore UID            // TODO: Q: difference btwn pageViewId/anonymousId?
+         - "sessionId"          - generated - Brytescore session id     // TODO: Q: difference btwn sessionId/pageViewId/anonymousId?
+         - "library"            - static    - library type
+         - "libraryVersion"     - static    - library version
+         - "schemaVersion"      - generated - if eventName contains '.', use a custom schemaVersion based on the eventName. otherwise, use schemaVersion.analytics
+         - "data"               - param     - data
          */
         let eventData = [
             "event": eventName,
@@ -231,7 +232,10 @@ public class BrytescoreAPIManager {
             task.resume()
         }
     }
-    
+
+    /**
+     Override Swift's dump function to only print while in devMode
+     */
     func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
         if (devMode == true) {
             Swift.print(items[0], separator:separator, terminator: terminator)
