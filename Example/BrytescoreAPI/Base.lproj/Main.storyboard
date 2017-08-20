@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eEm-4J-MYS">
-                                <rect key="frame" x="16" y="40" width="343" height="204.5"/>
+                                <rect key="frame" x="16" y="40" width="343" height="242.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brytescore API Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LDZ-Yr-gtP">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -44,8 +44,8 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOH-14-bdf">
                                         <rect key="frame" x="0.0" y="98.5" width="343" height="30"/>
-                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="backgroundColor" red="0.15294117647058825" green="0.66274509803921566" blue="0.8784313725490196" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Track Page View"/>
                                         <connections>
@@ -54,8 +54,8 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBa-ZT-kam">
                                         <rect key="frame" x="0.0" y="136.5" width="343" height="30"/>
-                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="backgroundColor" red="0.15294117647058825" green="0.66274509803921566" blue="0.8784313725490196" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Track Registered Account"/>
                                         <connections>
@@ -72,6 +72,16 @@
                                             <action selector="toggleDevMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Lwv-8d-1Hm"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hR6-7O-nLT">
+                                        <rect key="frame" x="0.0" y="212.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Toggle Debug Mode: Turn On"/>
+                                        <connections>
+                                            <action selector="toggleDebugMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mPh-Rf-5il"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -84,6 +94,7 @@
                     </view>
                     <connections>
                         <outlet property="apiKeyLabel" destination="5dD-I6-X8l" id="Jqz-LM-lvO"/>
+                        <outlet property="toggleDebugModeButton" destination="hR6-7O-nLT" id="r4g-Eo-Nnx"/>
                         <outlet property="toggleDevModeButton" destination="vGW-if-6S0" id="74f-GO-G6K"/>
                     </connections>
                 </viewController>
