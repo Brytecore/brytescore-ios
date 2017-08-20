@@ -59,7 +59,13 @@ class ViewController: UIViewController {
      - parameter sender: UIButton
      */
     @IBAction func trackRegisteredAccount(_ sender: UIButton) {
-        _apiManager.registeredAccount(data: ["isLead": false as AnyObject])
+        let registrationData = [
+            "isLead": false,
+            "userAccount": [
+                "id": 2
+            ]
+        ] as [String : AnyObject]
+        _apiManager.registeredAccount(data: registrationData)
     }
 
 
