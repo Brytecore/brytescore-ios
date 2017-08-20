@@ -106,21 +106,15 @@ public class BrytescoreAPIManager {
         // If we haven't saved the user ID globally, or the user IDs do not match
         // Do some things (TODO: doc)
         if (userId == nil || localUserID != userId) {
-            // Retrieve user ID from brytescore_uu
-            // TODO: actually pull from localstorage
-            // guard let bc = ["aid": "userfromlocalstorage"] !== nil else {
-            //     let bc = [:]
-            // }
-            let bc = ["aid": "userfromlocalstorage"]
-
-            // Save our new user ID to our global userId
-            userId = localUserID
-
-            if (bc != [:]) {
-                anonymousId = bc["aid"]
+            // Retrieve anonymous user ID from brytescore_uu_aid
+            if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
+                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
             } else {
                 anonymousId = "generatedUUID" // TODO: actually generate UUID
             }
+
+            // Save our new user ID to our global userId
+            userId = localUserID
 
             let localstorageData: Dictionary<String, AnyObject> = [
                 "aid": anonymousId as AnyObject,
