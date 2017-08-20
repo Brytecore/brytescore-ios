@@ -104,31 +104,28 @@ public class BrytescoreAPIManager {
         }
 
         // If we haven't saved the user ID globally, or the user IDs do not match
-        // Do some things (TODO: doc)
         if (userId == nil || localUserID != userId) {
-            // Retrieve anonymous user ID from brytescore_uu_aid
+            // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
             if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
                 anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
+                print("Retrieved anonymous user ID: \(anonymousId)")
             } else {
-                anonymousId = "generatedUUID" // TODO: actually generate UUID
+                print("No user ID has been saved. Generating...")
+                anonymousId = self.generateUUID()
+                print("Generated new anonymous user ID: \(anonymousId)")
             }
 
             // Save our new user ID to our global userId
             userId = localUserID
 
-            let localstorageData: Dictionary<String, AnyObject> = [
-                "aid": anonymousId as AnyObject,
-                "uid": userId as AnyObject,
-                "expiry": "SOME DATE" as AnyObject // TODO: set date? do we need this?
-            ]
-
-            // TODO: save localstorageData
-            print("TODO: save me: \(localstorageData)")
+            // Save our anonymous id and user id to local storage.
+            UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
+            UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
         }
 
         // Finally, in any case, track the account registration
         self.track(eventName: "registeredAccount", eventDisplayName: "Created a new account", data: data)
-     }
+    }
 
 
     // ---------------------------------- MARK: private methods --------------------------------- //
@@ -144,6 +141,14 @@ public class BrytescoreAPIManager {
         self.sendRequest(path: "track", eventName: eventName, eventDisplayName: eventDisplayName, data: data)
     }
 
+    /**
+     Helper Function for making CORS calls to the API.
+
+     - parameter path: path for the API URL
+     - parameter eventName: name of the event being tracked
+     - parameter eventDisplayName: display name of the event being tracked
+     - parameter data: metadate of the event being tracked
+     */
     private func sendRequest(path: String, eventName: String, eventDisplayName: String, data: Dictionary<String, Any> ) {
         // Generate the request endpoint
         let requestEndpoint: String = _url + "/" + path
@@ -177,8 +182,8 @@ public class BrytescoreAPIManager {
             "eventDisplayName": eventDisplayName,
             "hostName": hostname,
             "apiKey": _apiKey,
-            "anonymousId": "anon123",   // TODO: anonymousId
-            "userId": 1,                // TODO: userId
+            "anonymousId": anonymousId,
+            "userId": userId,
             "pageViewId": "anon123",    // TODO: pageViewId
             "sessionId": "anon123",     // TODO: sessionId
             "library": library,
@@ -242,6 +247,16 @@ public class BrytescoreAPIManager {
 
             task.resume()
         }
+    }
+
+    /**
+     Generate RFC4112 version 4 compliant UUID using Swift's built-in generator
+
+     - link: https://developer.apple.com/documentation/foundation/uuid
+     - returns: a new UUID string
+     */
+    private func generateUUID() -> String {
+        return(UUID().uuidString)
     }
 
     /**
