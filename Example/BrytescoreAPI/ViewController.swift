@@ -10,17 +10,17 @@ import UIKit
 import BrytescoreAPI
 
 class ViewController: UIViewController {
-    // -------------------------- MARK: Properties -------------------------- //
+    // ------------------------------------ MARK: Properties ------------------------------------ //
     @IBOutlet weak var apiKeyLabel: UILabel!
     @IBOutlet weak var toggleDevModeButton: UIButton!
 
-    // --------------------------- MARK: Variables -------------------------- //
+    // ------------------------------------- MARK: Variables ------------------------------------ //
     // Initialize the API Manager with your API key.
     let _apiManager = BrytescoreAPIManager(apiKey: "107e322f-3410-4d5b-8f43-d2bad8141771")
     var devMode = true
     let defaultAPIKeyLabel = "Your API Key:"
 
-    // ---------------------------- MARK: Methods --------------------------- //
+    // -------------------------------------- MARK: Methods ------------------------------------- //
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,20 +32,29 @@ class ViewController: UIViewController {
         apiKeyLabel.text = "\(defaultAPIKeyLabel) \(_apiManager.getAPIKey())"
     }
 
-    // ---------------------------- MARK: Actions --------------------------- //
+    // -------------------------------------- MARK: Actions ------------------------------------- //
+    /**
+     - parameter sender: UIButton
+     */
     @IBAction func trackPageView(_ sender: UIButton) {
         _apiManager.pageView(data: [:])
     }
 
+    /**
+     - parameter sender: UIButton
+     */
     @IBAction func trackRegisteredAccount(_ sender: UIButton) {
         _apiManager.registeredAccount(data: ["isLead": false as AnyObject])
     }
-    
+
+    /**
+    Toggle devMode bool, pass to _apiManager, update button title and color
+
+     - parameter sender: UIButton
+     */
     @IBAction func toggleDevMode(_ sender: UIButton) {
         devMode = !devMode
         _apiManager.devMode(enabled: devMode)
         sender.setTitle("Toggle Dev Mode: Turn \(devMode ? "off": "on")", for: .normal)
     }
-    
-
 }
