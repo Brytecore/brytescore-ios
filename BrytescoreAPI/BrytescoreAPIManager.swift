@@ -20,6 +20,7 @@ public class BrytescoreAPIManager {
     private var _apiKey = String()
     private var userId : Int?  = nil
     private var anonymousId : String? = nil
+    private var sessionId : String? = nil
     private var devMode = false
     private var debugMode = false
 
@@ -32,6 +33,7 @@ public class BrytescoreAPIManager {
      */
     public init(apiKey: String) {
         _apiKey = apiKey
+        sessionId = self.generateUUID()
     }
 
     /**
@@ -174,7 +176,7 @@ public class BrytescoreAPIManager {
          - "anonymousId"        - generated - Brytescore UID
          - "userId"             - retrieved - Client user id, may be null if unauthenticated
          - "pageViewId"         - generated - Brytescore UID            // TODO: Q: difference btwn pageViewId/anonymousId?
-         - "sessionId"          - generated - Brytescore session id     // TODO: Q: difference btwn sessionId/pageViewId/anonymousId?
+         - "sessionId"          - generated - Brytescore session id
          - "library"            - static    - library type
          - "libraryVersion"     - static    - library version
          - "schemaVersion"      - generated - if eventName contains '.', use a custom schemaVersion based on the eventName. otherwise, use schemaVersion.analytics
@@ -188,7 +190,7 @@ public class BrytescoreAPIManager {
             "anonymousId": anonymousId,
             "userId": userId,
             "pageViewId": "anon123",    // TODO: pageViewId
-            "sessionId": "anon123",     // TODO: sessionId
+            "sessionId": sessionId,
             "library": library,
             "libraryVersion": libraryVersion,
             "schemaVersion": schemaVersion["analytics"]!, // TODO: Q: i don't think this is a thing. check for '.' (see docstring above)
