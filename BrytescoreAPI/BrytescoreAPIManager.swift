@@ -228,7 +228,7 @@ public class BrytescoreAPIManager {
 
         // If there is a UID stored locally and the localUID does not match our new UID
         if (storedUserID != nil && storedUserID != newUserId) {
-            // TODO: self.changeLoggedInUser(userId);  // Save our new user ID to our global userId
+            self.changeLoggedInUser(userID: newUserId);  // Save our new user ID to our global userId
         }
 
         // Save our anonymous id and user id to local storage.
@@ -372,6 +372,41 @@ public class BrytescoreAPIManager {
      */
     private func generateUUID() -> String {
         return(UUID().uuidString)
+    }
+
+    /**
+     Process a change in the logged in user:
+     - Kill current session for old user
+     - Update and save the global user ID variable
+     - Generate and save new anonymousId
+     - Generate new sessionId
+
+     - parameter userID: The user ID.
+     */
+    private func changeLoggedInUser(userID: Int) {
+        // Kill current session for old user
+        // TODO: killSession()
+        // sessionTimeout = false
+
+        // Update and save the global user ID variable
+        userId = userID
+        UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
+
+        // Generate and save new anonymousId
+        anonymousId = self.generateUUID()
+        UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
+
+        // Generate new sessionId
+        sessionId = self.generateUUID()
+
+        self.track(eventName: "sessionStarted", eventDisplayName: "started new session", data: [
+            "sessionId": sessionId,
+            // "browserUA": browserUA,
+            "anonymousId": anonymousId
+        ]);
+
+        // Page view will update session cookie no need to write one.
+        self.pageView( data: [:] );
     }
 
     /**
