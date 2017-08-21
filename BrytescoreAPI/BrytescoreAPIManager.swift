@@ -143,6 +143,32 @@ public class BrytescoreAPIManager {
     }
 
     /**
+     Sends a submittedForm event.
+
+     - parameter data: The chat data.
+     - data.isImpersonating
+     */
+    public func submittedForm( data: Dictionary<String, AnyObject>) {
+        // TODO handle impersonating
+        // If the user is being impersonated, do not track.
+
+        self.track(eventName: "submittedForm", eventDisplayName: "'Submitted a Form", data: data)
+    };
+
+    /**
+     Sends a startedChat event.
+
+     - parameter data: The form data.
+     - data.isImpersonating
+     */
+    public func startedChat( data: Dictionary<String, AnyObject>) {
+        // TODO handle impersonating
+        // If the user is being impersonated, do not track.
+
+        self.track(eventName: "startedChat", eventDisplayName: "User Started a Live Chat", data: data)
+    };
+
+    /**
      Sends a user authentication event.
 
      - parameter data: The authentication data.
