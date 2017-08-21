@@ -21,8 +21,10 @@ public class BrytescoreAPIManager {
     private var userId : Int?  = nil
     private var anonymousId : String? = nil
     private var sessionId : String? = nil
+    private var pageViewId: String? = nil
     private var devMode = false
     private var debugMode = false
+    private var totalPageViewTime : Int = 0
 
 
     // ---------------------------------- MARK: public methods: --------------------------------- //
@@ -93,7 +95,25 @@ public class BrytescoreAPIManager {
      */
     public func pageView(data: Dictionary<String, Any>) {
         print("Calling pageView: \(data)")
+
+        // TODO handle impersonating
+        // If the user is being impersonated, do not track.
+
+        totalPageViewTime = 0
+        pageViewId = self.generateUUID()
+
+        // TODO: view metadata
+        // data.pageUrl = window.location.href;
+        // data.pageTitle = document.title;
+        // data.referrer = document.referrer;
+
         self.track(eventName: pageViewEventName, eventDisplayName: "Viewed a Page", data: data)
+
+        // Save session information
+        UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
+        UserDefaults.standard.set(anonymousId, forKey: "brytescore_session_aid")
+
+        // TODO: start hearbeat
     }
 
     /**
