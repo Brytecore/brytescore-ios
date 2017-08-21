@@ -82,8 +82,10 @@ class ViewController: UIViewController {
         sender.setTitle("Toggle Dev Mode: Turn \(devMode ? "Off": "On")", for: .normal)
         sender.backgroundColor = devMode ? orange : green
 
-        // If devMode is now on, debugMode is also. Only update if debugMode wasn't already on.
+        // If devMode is now on and debugMode was off, debugMode is now on.
+        // Only update if debugMode wasn't already on.
         if (devMode && !debugMode) {
+            debugMode = true
             toggleDebugModeButton.setTitle("Toggle Debug Mode: Turn Off", for: .normal)
             toggleDebugModeButton.backgroundColor = orange
         }
