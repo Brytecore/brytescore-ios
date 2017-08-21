@@ -28,12 +28,22 @@ public class BrytescoreAPIManager {
     // ---------------------------------- MARK: public methods: --------------------------------- //
     /**
      Sets the API key.
+     Generates a new unique session ID.
+     Retrieves the saved user ID, if any.
 
      - parameter apiKey: The API key.
      */
     public init(apiKey: String) {
         _apiKey = apiKey
+
+        // Generate unique session ID
         sessionId = self.generateUUID()
+
+        // Retrieve user ID from brytescore_uu_uid
+        if (UserDefaults.standard.object(forKey: "brytescore_uu_uid") != nil) {
+            userId = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as! Int
+            print("Retrieved user ID: \(userId)")
+        }
     }
 
     /**
