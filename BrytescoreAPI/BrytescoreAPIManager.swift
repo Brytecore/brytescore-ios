@@ -36,8 +36,9 @@ public class BrytescoreAPIManager {
     public init(apiKey: String) {
         _apiKey = apiKey
 
-        // Generate unique session ID
+        // Generate and save unique session ID
         sessionId = self.generateUUID()
+        UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
 
         // Retrieve user ID from brytescore_uu_uid
         if (UserDefaults.standard.object(forKey: "brytescore_uu_uid") != nil) {
