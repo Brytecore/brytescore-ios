@@ -88,6 +88,32 @@ class ViewController: UIViewController {
     }
 
     /**
+     Example usage of tracking a submitted form
+     - parameter sender: UIButton
+     */
+    @IBAction func trackSubmittedForm(_ sender: UIButton) {
+        let submittedFormData = [
+            "userAccount": [
+                "id": 2
+            ]
+            ] as [String : AnyObject]
+        _apiManager.submittedForm(data: submittedFormData)
+    }
+
+    /**
+     Example usage of tracking the start of a chat
+     - parameter sender: UIButton
+     */
+    @IBAction func trackStartedChat(_ sender: UIButton) {
+        let startedChatData = [
+            "userAccount": [
+                "id": 2
+            ]
+            ] as [String : AnyObject]
+        _apiManager.startedChat(data: startedChatData)
+    }
+
+    /**
      Toggle devMode bool, pass to _apiManager, update button title and color
 
      - parameter sender: UIButton
