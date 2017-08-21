@@ -175,7 +175,7 @@ public class BrytescoreAPIManager {
          - "apiKey"             - static    - user's API key
          - "anonymousId"        - generated - Brytescore UID
          - "userId"             - retrieved - Client user id, may be null if unauthenticated
-         - "pageViewId"         - generated - Brytescore UID            // TODO: Q: difference btwn pageViewId/anonymousId?
+         - "pageViewId"         - generated - Brytescore UID
          - "sessionId"          - generated - Brytescore session id
          - "library"            - static    - library type
          - "libraryVersion"     - static    - library version
@@ -189,7 +189,7 @@ public class BrytescoreAPIManager {
             "apiKey": _apiKey,
             "anonymousId": anonymousId,
             "userId": userId,
-            "pageViewId": "anon123",    // TODO: pageViewId
+            "pageViewId": self.generateUUID(),
             "sessionId": sessionId,
             "library": library,
             "libraryVersion": libraryVersion,
