@@ -197,7 +197,7 @@ public class BrytescoreAPIManager {
      - data.userAccount
      - data.userAccount.id
      */
-     public func authenticated(data: Dictionary<String, AnyObject>) {
+    public func authenticated(data: Dictionary<String, AnyObject>) {
         // TODO handle impersonating
         // If the user is being impersonated, do not track.
 
@@ -226,10 +226,14 @@ public class BrytescoreAPIManager {
             print("Retrieved user ID: \(userId)")
         }
 
-        // TODO: validate this.
-        if (storedUserID == nil || userId != newUserId) {
-            // TODO: self.changeLoggedInUser(userId);
+        // If there is a UID stored locally and the localUID does not match our new UID
+        if (storedUserID != nil && storedUserID != newUserId) {
+            // TODO: self.changeLoggedInUser(userId);  // Save our new user ID to our global userId
         }
+
+        // Save our anonymous id and user id to local storage.
+        UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
+        UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
 
         // Finally, in any case, track the authentication
         self.track(eventName: "authenticated", eventDisplayName: "Logged in", data: data)
