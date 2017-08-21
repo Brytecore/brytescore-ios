@@ -102,7 +102,7 @@ public class BrytescoreAPIManager {
      - data.isImpersonating
      - data.userAccount.id
      */
-     public func registeredAccount(data: Dictionary<String, AnyObject>) {
+    public func registeredAccount(data: Dictionary<String, AnyObject>) {
         print("Calling registeredAccount: \(data)")
 
         // TODO handle impersonating
@@ -142,6 +142,51 @@ public class BrytescoreAPIManager {
         self.track(eventName: "registeredAccount", eventDisplayName: "Created a new account", data: data)
     }
 
+    /**
+     Sends a user authentication event.
+
+     - parameter data: The authentication data.
+     - data.isImpersonating
+     - data.userAccount
+     - data.userAccount.id
+     */
+     public func authenticated(data: Dictionary<String, AnyObject>) {
+        // TODO handle impersonating
+        // If the user is being impersonated, do not track.
+
+        // Ensure that we have a user ID from data.userAccount.id
+        guard let userAccount = data["userAccount"] else {
+            print("data.userAccount is not defined")
+            return
+        }
+        guard let newUserId: Int = userAccount["id"] as? Int else {
+            print("data.userAccount.id is not defined")
+            return
+        }
+
+        // Check if we have an existing aid, otherwise generate
+        if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") == nil) {
+            anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
+            print("Retrieved anonymous user ID: \(anonymousId)")
+        } else {
+            anonymousId = generateUUID()
+        }
+
+        // Retrieve user ID from brytescore_uu_uid
+        var storedUserID : Int? = nil
+        if (UserDefaults.standard.object(forKey: "brytescore_uu_uid") != nil) {
+            storedUserID = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as! Int
+            print("Retrieved user ID: \(userId)")
+        }
+
+        // TODO: validate this.
+        if (storedUserID == nil || userId != newUserId) {
+            // TODO: self.changeLoggedInUser(userId);
+        }
+
+        // Finally, in any case, track the authentication
+        self.track(eventName: "authenticated", eventDisplayName: "Logged in", data: data)
+     }
 
     // ---------------------------------- MARK: private methods --------------------------------- //
     /**
@@ -153,6 +198,10 @@ public class BrytescoreAPIManager {
      */
     private func track(eventName: String, eventDisplayName: String, data: Dictionary<String, Any>) {
         print("Calling track: \(eventName) \(eventDisplayName) \(data)")
+
+        // TODO handle impersonating
+        // If the user is being impersonated, do not track.
+
         self.sendRequest(path: "track", eventName: eventName, eventDisplayName: eventDisplayName, data: data)
     }
 
