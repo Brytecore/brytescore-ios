@@ -52,6 +52,7 @@ class ViewController: UIViewController {
 
     // -------------------------------------- MARK: Actions ------------------------------------- //
     /**
+     Example usage of tracking a page view
      - parameter sender: UIButton
      */
     @IBAction func trackPageView(_ sender: UIButton) {
@@ -59,6 +60,7 @@ class ViewController: UIViewController {
     }
 
     /**
+     Example usage of tracking an account registration
      - parameter sender: UIButton
      */
     @IBAction func trackRegisteredAccount(_ sender: UIButton) {
@@ -69,6 +71,20 @@ class ViewController: UIViewController {
             ]
         ] as [String : AnyObject]
         _apiManager.registeredAccount(data: registrationData)
+    }
+
+    /**
+     Example usage of tracking authentication
+     - parameter sender: UIButton
+     */
+    @IBAction func trackAuthenticated(_ sender: UIButton) {
+        let authenticatedData = [
+            "userAccount": [
+                "id": 2
+            ]
+        ] as [String : AnyObject]
+        _apiManager.authenticated(data: authenticatedData)
+
     }
 
     /**
