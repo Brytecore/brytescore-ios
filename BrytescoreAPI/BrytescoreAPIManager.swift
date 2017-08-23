@@ -24,6 +24,7 @@ public class BrytescoreAPIManager {
     private var pageViewId: String? = nil
     private var devMode = false
     private var debugMode = false
+    private var impersonationMode = false
     private var totalPageViewTime : Int = 0
 
 
@@ -85,6 +86,15 @@ public class BrytescoreAPIManager {
     }
 
     /**
+     Sets impersonation mode.
+     Bypasses sending information to the API when impersonating another user.
+
+     - parameter enabled: If true, then impersonation mode is enabled.
+     */
+    public func impersonationMode(enabled: Bool) {
+        impersonationMode = enabled
+    }
+
      Start a pageView.
 
      - parameter data: The pageView data.
