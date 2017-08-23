@@ -25,6 +25,7 @@ public class BrytescoreAPIManager {
     private var devMode = false
     private var debugMode = false
     private var impersonationMode = false
+    private var validationMode = false
     private var totalPageViewTime : Int = 0
 
 
@@ -95,6 +96,17 @@ public class BrytescoreAPIManager {
         impersonationMode = enabled
     }
 
+    /**
+     Sets validation mode.
+     Adds a validation attribute to the data for all API calls.
+
+     - parameter enabled: If true, then validation mode is enabled.
+     */
+    public func validationMode(enabled: Bool) {
+        validationMode = enabled
+    }
+
+    /**
      Start a pageView.
 
      - parameter data: The pageView data.
