@@ -332,7 +332,7 @@ public class BrytescoreAPIManager {
          - "schemaVersion"      - generated - if eventName contains '.', use a custom schemaVersion based on the eventName. otherwise, use schemaVersion.analytics
          - "data"               - param     - data
          */
-        let eventData = [
+        var eventData = [
             "event": eventName,
             "eventDisplayName": eventDisplayName,
             "hostName": hostname,
@@ -343,9 +343,14 @@ public class BrytescoreAPIManager {
             "sessionId": sessionId,
             "library": library,
             "libraryVersion": libraryVersion,
-            "schemaVersion": schemaVersion["analytics"]!, // TODO: Q: i don't think this is a thing. check for '.' (see docstring above)
+            "schemaVersion": schemaVersion["analytics"]!, // TODO: handle dynamic functions. check for '.' (see docstring above)
             "data": data
         ] as [String : Any]
+
+        // Handle validation mode, if activated
+        if (validationMode == true) {
+            eventData["validationOnly"] = validationMode
+        }
 
         // Set up the request body
         do {
