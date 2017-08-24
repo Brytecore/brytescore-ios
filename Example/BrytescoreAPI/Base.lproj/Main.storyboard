@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eEm-4J-MYS">
-                                <rect key="frame" x="16" y="40" width="343" height="356.5"/>
+                                <rect key="frame" x="16" y="40" width="343" height="432.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brytescore API Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LDZ-Yr-gtP">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -112,6 +112,28 @@
                                             <action selector="toggleDebugMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mPh-Rf-5il"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1FX-5w-mqN">
+                                        <rect key="frame" x="0.0" y="364.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <state key="normal" title="Toggle Impersonation Mode: Turn On">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleImpersonationMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kkt-2G-J1q"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFd-5T-Zgy">
+                                        <rect key="frame" x="0.0" y="402.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <state key="normal" title="Toggle Validation Mode: Turn On">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleValidationMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Pyk-xm-0gt"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -126,6 +148,8 @@
                         <outlet property="apiKeyLabel" destination="5dD-I6-X8l" id="Jqz-LM-lvO"/>
                         <outlet property="toggleDebugModeButton" destination="hR6-7O-nLT" id="r4g-Eo-Nnx"/>
                         <outlet property="toggleDevModeButton" destination="vGW-if-6S0" id="74f-GO-G6K"/>
+                        <outlet property="toggleImpersonationModeButton" destination="1FX-5w-mqN" id="khR-qV-hja"/>
+                        <outlet property="toggleValidationModeButton" destination="oFd-5T-Zgy" id="wep-se-zkR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

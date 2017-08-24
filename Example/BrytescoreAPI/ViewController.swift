@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var apiKeyLabel: UILabel!
     @IBOutlet weak var toggleDevModeButton: UIButton!
     @IBOutlet weak var toggleDebugModeButton: UIButton!
-
+    @IBOutlet weak var toggleImpersonationModeButton: UIButton!
+    @IBOutlet weak var toggleValidationModeButton: UIButton!
 
     // ------------------------------------- MARK: Variables ------------------------------------ //
     // Initialize the API Manager with your API key.
@@ -23,6 +24,8 @@ class ViewController: UIViewController {
     // Bools for local status of dev and debug mode, used to toggle state with buttons
     var devMode = true
     var debugMode = true
+    var impersonationMode = false
+    var validationMode = false
 
     // Button helpers - API Key label and button colors
     let defaultAPIKeyLabel = "Your API Key:"
@@ -44,6 +47,11 @@ class ViewController: UIViewController {
         _apiManager.debugMode(enabled: debugMode)
         toggleDebugModeButton.setTitle("Toggle Debug Mode: Turn \(debugMode ? "Off": "On")", for: .normal)
         toggleDebugModeButton.backgroundColor = debugMode ? orange : green
+        
+        // Set button colors for unused modes
+        toggleImpersonationModeButton.backgroundColor = impersonationMode ? orange : green
+        toggleValidationModeButton.backgroundColor = validationMode ? orange : green
+
 
         // Update the API Key label to show our API key for debugging
         apiKeyLabel.text = "\(defaultAPIKeyLabel) \(_apiManager.getAPIKey())"
@@ -144,5 +152,28 @@ class ViewController: UIViewController {
         sender.setTitle("Toggle Debug Mode: Turn \(debugMode ? "Off": "On")", for: .normal)
         sender.backgroundColor = debugMode ? orange : green
     }
+    
+    /**
+     Toggle impersonationMode bool, pass to _apiManager, update button title and color
+     
+     - parameter sender: UIButton
+     */
+    @IBAction func toggleImpersonationMode(_ sender: UIButton) {
+        impersonationMode = !impersonationMode
+        _apiManager.impersonationMode(enabled: impersonationMode)
+        sender.setTitle("Toggle Impersonation Mode: Turn \(impersonationMode ? "Off": "On")", for: .normal)
+        sender.backgroundColor = impersonationMode ? orange : green
+    }
 
+    /**
+     Toggle validationMode bool, pass to _apiManager, update button title and color
+     
+     - parameter sender: UIButton
+     */
+    @IBAction func toggleValidationMode(_ sender: UIButton) {
+        validationMode = !validationMode
+        _apiManager.validationMode(enabled: validationMode)
+        sender.setTitle("Toggle Validation Mode: Turn \(validationMode ? "Off": "On")", for: .normal)
+        sender.backgroundColor = validationMode ? orange : green
+    }
 }
