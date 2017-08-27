@@ -120,6 +120,19 @@ class ViewController: UIViewController {
             ] as [String : AnyObject]
         _apiManager.startedChat(data: startedChatData)
     }
+    
+    /**
+     Example usage of tracking the when a user updates their information
+     - parameter sender: UIButton
+     */
+    @IBAction func trackUpdatedUserInfo(_ sender: UIButton) {
+        let updatedUserInfoData = [
+            "userAccount": [
+                "id": 2
+            ]
+            ] as [String : AnyObject]
+        _apiManager.updatedUserInfo(data: updatedUserInfoData)
+    }
 
     /**
      Toggle devMode bool, pass to _apiManager, update button title and color
