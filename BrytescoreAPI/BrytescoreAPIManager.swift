@@ -224,6 +224,52 @@ public class BrytescoreAPIManager {
     };
 
     /**
+     * Updates a user's account information.
+     *
+     * @param {object} data The account data.
+     */
+    public func updatedUserInfo(data: Dictionary<String, AnyObject>) {
+        // If the user is being impersonated, do not track.
+        if (impersonationMode == true || data["impersonationMode"] != nil) {
+            print("Impersonation mode is on - will not track event");
+            return
+        }
+
+        // Ensure that we have a user ID from data.userAccount.id
+        guard let userAccount = data["userAccount"] else {
+            print("data.userAccount is not defined")
+            return
+        }
+        guard let localUserID: Int = userAccount["id"] as? Int else {
+            print("data.userAccount.id is not defined")
+            return
+        }
+
+        // If we haven't saved the user ID globally, or the user IDs do not match
+        if (userId == nil || localUserID != userId) {
+            // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
+            if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
+                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
+                print("Retrieved anonymous user ID: \(anonymousId)")
+            } else {
+                print("No user ID has been saved. Generating...")
+                anonymousId = self.generateUUID()
+                print("Generated new anonymous user ID: \(anonymousId)")
+            }
+
+            // Save our new user ID to our global userId
+            userId = localUserID
+
+            // Save our anonymous id and user id to local storage.
+            UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
+            UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
+        }
+
+        // Finally, in any case, track the user info update
+        self.track(eventName: "updatedUserInfo", eventDisplayName: "Updated User Information", data: data)
+    }
+
+    /**
      Sends a user authentication event.
 
      - parameter data: The authentication data.
