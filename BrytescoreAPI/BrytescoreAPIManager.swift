@@ -10,6 +10,7 @@ public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
     private let _url = "https://api.brytecore.com"
     private let pageViewEventName = "pageView"
+    private let heartBeatEventName = "heartBeat"
     private let hostname = "com.brytecore.mobile"
     private let library = "iOS"
     private let libraryVersion = "0.0.0"
@@ -21,12 +22,18 @@ public class BrytescoreAPIManager {
     private var userId : Int?  = nil
     private var anonymousId : String? = nil
     private var sessionId : String? = nil
-    private var pageViewId: String? = nil
+    private var pageViewId : String? = nil
     private var devMode = false
     private var debugMode = false
     private var impersonationMode = false
     private var validationMode = false
-    private var totalPageViewTime : Int = 0
+    private var totalPageViewTime : TimeInterval = 0
+    private var inactivityId : Int = 0
+
+    private var heartbeatTimer = Timer()
+    private var isHearbeatTimerRunning = false
+    private var hearbeatLength : TimeInterval = 15 // in seconds
+    private var startHeartbeatTime = Date(timeIntervalSinceNow: 9999999)
 
 
     // ---------------------------------- MARK: public methods: --------------------------------- //
@@ -138,7 +145,10 @@ public class BrytescoreAPIManager {
         UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
         UserDefaults.standard.set(anonymousId, forKey: "brytescore_session_aid")
 
-        // TODO: start hearbeat
+        // Send the first heartbeat and start the timer
+        print("Sending 'first' heartbeat'");
+        self.heartBeat();
+        heartbeatTimer = Timer.scheduledTimer(timeInterval: hearbeatLength, target: self, selector: #selector(self.checkHeartbeat), userInfo: nil, repeats: true)
     }
 
     /**
@@ -476,8 +486,7 @@ public class BrytescoreAPIManager {
      */
     private func changeLoggedInUser(userID: Int) {
         // Kill current session for old user
-        // TODO: killSession()
-        // sessionTimeout = false
+        self.killSession()
 
         // Update and save the global user ID variable
         userId = userID
@@ -498,6 +507,57 @@ public class BrytescoreAPIManager {
 
         // Page view will update session cookie no need to write one.
         self.pageView( data: [:] );
+    }
+
+    /**
+     * Sends a heartbeat event
+     */
+    private func heartBeat() {
+        print("Calling heartBeat")
+
+        totalPageViewTime = totalPageViewTime + hearbeatLength
+        self.track(eventName: heartBeatEventName, eventDisplayName: "Heartbeat", data: ["elapsedTime": totalPageViewTime])
+    }
+
+    /**
+     * Kills the session.
+     */
+    public func killSession() {
+        print("Calling killSession")
+
+        // Stop the timer
+        heartbeatTimer.invalidate()
+
+        // Reset the heartbeat start time
+        startHeartbeatTime = Date(timeIntervalSinceNow: 9999999)
+
+        // Delete and save session id
+        sessionId = nil
+        UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
+
+        // sessionTimeout = true;
+        // Reset pageViewIDs
+        pageViewId = nil;
+    }
+
+    /**
+     *
+     */
+    @objc func checkHeartbeat() {
+        print("Calling checkHeartbeat");
+
+        let elapsed = Date().timeIntervalSince(startHeartbeatTime)
+
+        // Heartbeat is not dead yet.
+        if (elapsed < 1800) {
+            print("Heartbeat is not dead yet.")
+            startHeartbeatTime = Date()
+            self.heartBeat()
+        // Heartbeat is dead
+        } else {
+            print("Heartbeat is dead.")
+            self.killSession()
+        }
     }
 
     /**

@@ -47,14 +47,27 @@ class ViewController: UIViewController {
         _apiManager.debugMode(enabled: debugMode)
         toggleDebugModeButton.setTitle("Toggle Debug Mode: Turn \(debugMode ? "Off": "On")", for: .normal)
         toggleDebugModeButton.backgroundColor = debugMode ? orange : green
-        
+
         // Set button colors for unused modes
         toggleImpersonationModeButton.backgroundColor = impersonationMode ? orange : green
         toggleValidationModeButton.backgroundColor = validationMode ? orange : green
 
-
         // Update the API Key label to show our API key for debugging
         apiKeyLabel.text = "\(defaultAPIKeyLabel) \(_apiManager.getAPIKey())"
+
+        let notificationCenter = NotificationCenter.default
+        // Background listener
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        // Foreground listener
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+    }
+
+    func appMovedToBackground() {
+        _apiManager.killSession()
+    }
+
+    func appMovedToForeground() {
+        _apiManager.pageView(data: [:])
     }
 
 
@@ -120,7 +133,7 @@ class ViewController: UIViewController {
             ] as [String : AnyObject]
         _apiManager.startedChat(data: startedChatData)
     }
-    
+
     /**
      Example usage of tracking the when a user updates their information
      - parameter sender: UIButton
@@ -165,10 +178,10 @@ class ViewController: UIViewController {
         sender.setTitle("Toggle Debug Mode: Turn \(debugMode ? "Off": "On")", for: .normal)
         sender.backgroundColor = debugMode ? orange : green
     }
-    
+
     /**
      Toggle impersonationMode bool, pass to _apiManager, update button title and color
-     
+
      - parameter sender: UIButton
      */
     @IBAction func toggleImpersonationMode(_ sender: UIButton) {
@@ -180,7 +193,7 @@ class ViewController: UIViewController {
 
     /**
      Toggle validationMode bool, pass to _apiManager, update button title and color
-     
+
      - parameter sender: UIButton
      */
     @IBAction func toggleValidationMode(_ sender: UIButton) {
