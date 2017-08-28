@@ -187,6 +187,7 @@ public class BrytescoreAPIManager {
                 print("No user ID has been saved. Generating...")
                 anonymousId = self.generateUUID()
                 print("Generated new anonymous user ID: \(anonymousId)")
+                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId])
             }
 
             // Save our new user ID to our global userId
@@ -265,6 +266,7 @@ public class BrytescoreAPIManager {
                 print("No user ID has been saved. Generating...")
                 anonymousId = self.generateUUID()
                 print("Generated new anonymous user ID: \(anonymousId)")
+                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId])
             }
 
             // Save our new user ID to our global userId
@@ -495,6 +497,7 @@ public class BrytescoreAPIManager {
         // Generate and save new anonymousId
         anonymousId = self.generateUUID()
         UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
+        self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId])
 
         // Generate new sessionId
         sessionId = self.generateUUID()
