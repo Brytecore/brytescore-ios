@@ -10,14 +10,17 @@ public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
     // Variables used to fill event data for tracking
     private let _url = "https://api.brytecore.com"
-    private let pageViewEventName = "pageView"
-    private let heartBeatEventName = "heartBeat"
     private let hostname = "com.brytecore.mobile"
     private let library = "iOS"
     private let libraryVersion = "0.0.0"
 
+    private let eventNames = [
+        "pageView": "pageView",
+        "heartBeat": "heartBeat"
+    ]
+
     // --------------------------------- MARK: dynamic variables -------------------------------- //
-    private var _apiKey = String()
+    private var _apiKey : String
 
     // Variables to hold package-wide IDs
     private var userId : Int?  = nil
@@ -27,7 +30,7 @@ public class BrytescoreAPIManager {
 
     // Variables used to fill event data for tracking
     // When additional packages are loaded, they are added to this dictionary
-    private var schemaVersion = ["analytics": "0.3.1"]
+    private var schemaVersion : Dictionary<String, String>  = ["analytics": "0.3.1"]
 
     // Inactivity timers TODO maybe just status, not timer?
     private var inactivityId : Int = 0
@@ -62,10 +65,7 @@ public class BrytescoreAPIManager {
         UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
 
         // Retrieve user ID from brytescore_uu_uid
-        if (UserDefaults.standard.object(forKey: "brytescore_uu_uid") != nil) {
-            userId = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as! Int
-            print("Retrieved user ID: \(userId)")
-        }
+        userId = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as? Int
     }
 
     /**
@@ -149,7 +149,7 @@ public class BrytescoreAPIManager {
         // data.pageTitle = document.title;
         // data.referrer = document.referrer;
 
-        self.track(eventName: pageViewEventName, eventDisplayName: "Viewed a Page", data: data)
+        self.track(eventName: eventNames["pageView"]!, eventDisplayName: "Viewed a Page", data: data)
 
         // Save session information
         UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
@@ -191,13 +191,13 @@ public class BrytescoreAPIManager {
         if (userId == nil || localUserID != userId) {
             // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
             if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
-                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
-                print("Retrieved anonymous user ID: \(anonymousId)")
+                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
+                print("Retrieved anonymous user ID: \(anonymousId!)")
             } else {
-                print("No user ID has been saved. Generating...")
+                print("No anonymous ID has been saved. Generating...")
                 anonymousId = self.generateUUID()
-                print("Generated new anonymous user ID: \(anonymousId)")
-                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId])
+                print("Generated new anonymous user ID: \(anonymousId!)")
+                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
             }
 
             // Save our new user ID to our global userId
@@ -270,13 +270,13 @@ public class BrytescoreAPIManager {
         if (userId == nil || localUserID != userId) {
             // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
             if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
-                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
-                print("Retrieved anonymous user ID: \(anonymousId)")
+                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
+                print("Retrieved anonymous user ID: \(anonymousId!)")
             } else {
-                print("No user ID has been saved. Generating...")
+                print("No anonymous ID has been saved. Generating...")
                 anonymousId = self.generateUUID()
-                print("Generated new anonymous user ID: \(anonymousId)")
-                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId])
+                print("Generated new anonymous user ID: \(anonymousId!)")
+                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
             }
 
             // Save our new user ID to our global userId
@@ -317,9 +317,9 @@ public class BrytescoreAPIManager {
         }
 
         // Check if we have an existing aid, otherwise generate
-        if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") == nil) {
-            anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as! String
-            print("Retrieved anonymous user ID: \(anonymousId)")
+        if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
+            anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
+            print("Retrieved anonymous user ID: \(anonymousId!)")
         } else {
             anonymousId = generateUUID()
         }
@@ -327,13 +327,13 @@ public class BrytescoreAPIManager {
         // Retrieve user ID from brytescore_uu_uid
         var storedUserID : Int? = nil
         if (UserDefaults.standard.object(forKey: "brytescore_uu_uid") != nil) {
-            storedUserID = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as! Int
-            print("Retrieved user ID: \(userId)")
+            storedUserID = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as? Int
+            print("Retrieved user ID: \(storedUserID!)")
         }
 
         // If there is a UID stored locally and the localUID does not match our new UID
         if (storedUserID != nil && storedUserID != newUserId) {
-            self.changeLoggedInUser(userID: newUserId);  // Save our new user ID to our global userId
+            self.changeLoggedInUser(userID: newUserId);  // Saves our new user ID to our global userId
         }
 
         // Save our anonymous id and user id to local storage.
@@ -342,6 +342,27 @@ public class BrytescoreAPIManager {
 
         // Finally, in any case, track the authentication
         self.track(eventName: "authenticated", eventDisplayName: "Logged in", data: data)
+    }
+
+    /**
+     * Kills the session.
+     */
+    public func killSession() {
+        print("Calling killSession")
+
+        // Stop the timer
+        heartbeatTimer.invalidate()
+
+        // Reset the heartbeat start time
+        startHeartbeatTime = Date(timeIntervalSinceNow: 9999999)
+
+        // Delete and save session id
+        sessionId = nil
+        UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
+
+        // sessionTimeout = true;
+        // Reset pageViewIDs
+        pageViewId = nil;
     }
 
     // ---------------------------------- MARK: private methods --------------------------------- //
@@ -412,10 +433,10 @@ public class BrytescoreAPIManager {
             "eventDisplayName": eventDisplayName,
             "hostName": hostname,
             "apiKey": _apiKey,
-            "anonymousId": anonymousId,
-            "userId": userId,
+            "anonymousId": anonymousId ?? "",
+            "userId": userId ?? "",
             "pageViewId": self.generateUUID(),
-            "sessionId": sessionId,
+            "sessionId": sessionId ?? "",
             "library": library,
             "libraryVersion": libraryVersion,
             "schemaVersion": schemaVersion["analytics"]!, // TODO: handle dynamic functions. check for '.' (see docstring above)
@@ -514,15 +535,15 @@ public class BrytescoreAPIManager {
         // Generate and save new anonymousId
         anonymousId = self.generateUUID()
         UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
-        self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId])
+        self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
 
         // Generate new sessionId
         sessionId = self.generateUUID()
 
         self.track(eventName: "sessionStarted", eventDisplayName: "started new session", data: [
-            "sessionId": sessionId,
+            "sessionId": sessionId!,
             // "browserUA": browserUA,
-            "anonymousId": anonymousId
+            "anonymousId": anonymousId!
         ]);
 
         // Page view will update session cookie no need to write one.
@@ -536,28 +557,7 @@ public class BrytescoreAPIManager {
         print("Calling heartBeat")
 
         totalPageViewTime = totalPageViewTime + hearbeatLength
-        self.track(eventName: heartBeatEventName, eventDisplayName: "Heartbeat", data: ["elapsedTime": totalPageViewTime])
-    }
-
-    /**
-     * Kills the session.
-     */
-    public func killSession() {
-        print("Calling killSession")
-
-        // Stop the timer
-        heartbeatTimer.invalidate()
-
-        // Reset the heartbeat start time
-        startHeartbeatTime = Date(timeIntervalSinceNow: 9999999)
-
-        // Delete and save session id
-        sessionId = nil
-        UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
-
-        // sessionTimeout = true;
-        // Reset pageViewIDs
-        pageViewId = nil;
+        self.track(eventName: eventNames["heartBeat"]!, eventDisplayName: "Heartbeat", data: ["elapsedTime": totalPageViewTime])
     }
 
     /**
@@ -594,7 +594,7 @@ public class BrytescoreAPIManager {
      */
     func dump(_ item: Any..., name: String) {
         if (debugMode == true) {
-            Swift.dump(item, name: name)
+            _ = Swift.dump(item, name: name)
         }
     }
 }
