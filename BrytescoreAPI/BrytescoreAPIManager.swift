@@ -342,7 +342,7 @@ public class BrytescoreAPIManager {
 
         // Finally, in any case, track the authentication
         self.track(eventName: "authenticated", eventDisplayName: "Logged in", data: data)
-     }
+    }
 
     // ---------------------------------- MARK: private methods --------------------------------- //
     /**
@@ -373,10 +373,17 @@ public class BrytescoreAPIManager {
      - parameter data: metadate of the event being tracked
      */
     private func sendRequest(path: String, eventName: String, eventDisplayName: String, data: Dictionary<String, Any> ) {
+        print("Calling sendRequest: path \(path) eventName \(eventName) eventDisplayName \(eventDisplayName)")
+
         // Generate the request endpoint
         let requestEndpoint: String = _url + "/" + path
         guard let url = URL(string: requestEndpoint) else {
             print("Error: cannot create URL")
+            return
+        }
+
+        guard (_apiKey.characters.count != 0) else {
+            print("Abandon ship! You must provide an API key.")
             return
         }
 
