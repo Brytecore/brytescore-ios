@@ -15,8 +15,15 @@ public class BrytescoreAPIManager {
     private let libraryVersion = "0.0.0"
 
     private let eventNames = [
+        "authenticated": "authenticated",
+        "brytescoreUUIDCreated": "brytescoreUUIDCreated",
+        "heartBeat": "heartBeat",
         "pageView": "pageView",
-        "heartBeat": "heartBeat"
+        "registeredAccount": "registeredAccount",
+        "sessionStarted": "sessionStarted",
+        "startedChat": "startedChat",
+        "submittedForm": "submittedForm",
+        "updatedUserInfo": "updatedUserInfo"
     ]
 
     // --------------------------------- MARK: dynamic variables -------------------------------- //
@@ -197,7 +204,7 @@ public class BrytescoreAPIManager {
                 print("No anonymous ID has been saved. Generating...")
                 anonymousId = self.generateUUID()
                 print("Generated new anonymous user ID: \(anonymousId!)")
-                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
+                self.track(eventName: eventNames["brytescoreUUIDCreated"]!, eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
             }
 
             // Save our new user ID to our global userId
@@ -209,7 +216,7 @@ public class BrytescoreAPIManager {
         }
 
         // Finally, in any case, track the account registration
-        self.track(eventName: "registeredAccount", eventDisplayName: "Created a new account", data: data)
+        self.track(eventName: eventNames["registeredAccount"]!, eventDisplayName: "Created a new account", data: data)
     }
 
     /**
@@ -225,7 +232,7 @@ public class BrytescoreAPIManager {
             return
         }
 
-        self.track(eventName: "submittedForm", eventDisplayName: "'Submitted a Form", data: data)
+        self.track(eventName: eventNames["submittedForm"]!, eventDisplayName: "'Submitted a Form", data: data)
     };
 
     /**
@@ -241,7 +248,7 @@ public class BrytescoreAPIManager {
             return
         }
 
-        self.track(eventName: "startedChat", eventDisplayName: "User Started a Live Chat", data: data)
+        self.track(eventName: eventNames["startedChat"]!, eventDisplayName: "User Started a Live Chat", data: data)
     };
 
     /**
@@ -276,7 +283,7 @@ public class BrytescoreAPIManager {
                 print("No anonymous ID has been saved. Generating...")
                 anonymousId = self.generateUUID()
                 print("Generated new anonymous user ID: \(anonymousId!)")
-                self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
+                self.track(eventName: eventNames["brytescoreUUIDCreated"]!, eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
             }
 
             // Save our new user ID to our global userId
@@ -288,7 +295,7 @@ public class BrytescoreAPIManager {
         }
 
         // Finally, in any case, track the user info update
-        self.track(eventName: "updatedUserInfo", eventDisplayName: "Updated User Information", data: data)
+        self.track(eventName: eventNames["updatedUserInfo"]!, eventDisplayName: "Updated User Information", data: data)
     }
 
     /**
@@ -341,7 +348,7 @@ public class BrytescoreAPIManager {
         UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
 
         // Finally, in any case, track the authentication
-        self.track(eventName: "authenticated", eventDisplayName: "Logged in", data: data)
+        self.track(eventName: eventNames["authenticated"]!, eventDisplayName: "Logged in", data: data)
     }
 
     /**
@@ -535,12 +542,12 @@ public class BrytescoreAPIManager {
         // Generate and save new anonymousId
         anonymousId = self.generateUUID()
         UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
-        self.track(eventName: "brytescoreUUIDCreated", eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
+        self.track(eventName: eventNames["brytescoreUUIDCreated"]!, eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
 
         // Generate new sessionId
         sessionId = self.generateUUID()
 
-        self.track(eventName: "sessionStarted", eventDisplayName: "started new session", data: [
+        self.track(eventName: eventNames["sessionStarted"]!, eventDisplayName: "started new session", data: [
             "sessionId": sessionId!,
             // "browserUA": browserUA,
             "anonymousId": anonymousId!
