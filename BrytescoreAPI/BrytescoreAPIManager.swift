@@ -55,7 +55,6 @@ public class BrytescoreAPIManager {
     private var impersonationMode = false
     private var validationMode = false
 
-
     // ---------------------------------- MARK: public methods: --------------------------------- //
     /**
      Sets the API key.
@@ -142,6 +141,7 @@ public class BrytescoreAPIManager {
     public func pageView(data: Dictionary<String, Any>) {
         print("Calling pageView: \(data)")
 
+        // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
             return
         }
@@ -190,6 +190,7 @@ public class BrytescoreAPIManager {
      - data.isImpersonating
      */
     public func submittedForm( data: Dictionary<String, AnyObject>) {
+        // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
             return
         }
@@ -204,6 +205,7 @@ public class BrytescoreAPIManager {
      - data.isImpersonating
      */
     public func startedChat( data: Dictionary<String, AnyObject>) {
+        // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
             return
         }
@@ -234,16 +236,17 @@ public class BrytescoreAPIManager {
      - data.userAccount.id
      */
     public func authenticated(data: Dictionary<String, AnyObject>) {
+        // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
             return
         }
 
         // Ensure that we have a user ID from data.userAccount.id
-        guard let userAccount = data["userAccount"] else {
+        guard let userAccount = data["userAccount"] as? Dictionary<String, Int> else {
             print("data.userAccount is not defined")
             return
         }
-        guard let newUserId: Int = userAccount["id"] as? Int else {
+        guard let newUserId: Int = userAccount["id"] else {
             print("data.userAccount.id is not defined")
             return
         }
@@ -308,6 +311,7 @@ public class BrytescoreAPIManager {
     private func track(eventName: String, eventDisplayName: String, data: Dictionary<String, Any>) {
         print("Calling track: \(eventName) \(eventDisplayName) \(data)")
 
+        // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
             return
         }
@@ -494,9 +498,9 @@ public class BrytescoreAPIManager {
      *
      */
     private func updateUser(data: Dictionary<String, Any>) -> Bool {
+
         // If the user is being impersonated, do not track.
-        if (impersonationMode == true || data["impersonationMode"] != nil) {
-            print("Impersonation mode is on - will not track event");
+        guard checkImpersonation(data: data) else {
             return false
         }
 
@@ -537,7 +541,6 @@ public class BrytescoreAPIManager {
      *
      */
     private func checkImpersonation(data: Dictionary<String, Any>) -> Bool {
-        // If the user is being impersonated, do not track.
         if (impersonationMode == true || data["impersonationMode"] != nil) {
             print("Impersonation mode is on - will not track event");
             return false
