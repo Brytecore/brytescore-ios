@@ -177,46 +177,12 @@ public class BrytescoreAPIManager {
      */
     public func registeredAccount(data: Dictionary<String, AnyObject>) {
         print("Calling registeredAccount: \(data)")
+        let userStatus = self.updateUser(data: data)
 
-        // If the user is being impersonated, do not track.
-        if (impersonationMode == true || data["impersonationMode"] != nil) {
-            print("Impersonation mode is on - will not track event");
-            return
+        // Finally, as long as the data was valid, track the account registration
+        if (userStatus == true) {
+            self.track(eventName: eventNames["registeredAccount"]!, eventDisplayName: "Created a new account", data: data)
         }
-
-        // Ensure that we have a user ID from data.userAccount.id
-        guard let userAccount = data["userAccount"] else {
-            print("data.userAccount is not defined")
-            return
-        }
-        guard let localUserID: Int = userAccount["id"] as? Int else {
-            print("data.userAccount.id is not defined")
-            return
-        }
-
-        // If we haven't saved the user ID globally, or the user IDs do not match
-        if (userId == nil || localUserID != userId) {
-            // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
-            if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
-                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
-                print("Retrieved anonymous user ID: \(anonymousId!)")
-            } else {
-                print("No anonymous ID has been saved. Generating...")
-                anonymousId = self.generateUUID()
-                print("Generated new anonymous user ID: \(anonymousId!)")
-                self.track(eventName: eventNames["brytescoreUUIDCreated"]!, eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
-            }
-
-            // Save our new user ID to our global userId
-            userId = localUserID
-
-            // Save our anonymous id and user id to local storage.
-            UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
-            UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
-        }
-
-        // Finally, in any case, track the account registration
-        self.track(eventName: eventNames["registeredAccount"]!, eventDisplayName: "Created a new account", data: data)
     }
 
     /**
@@ -257,45 +223,12 @@ public class BrytescoreAPIManager {
      * @param {object} data The account data.
      */
     public func updatedUserInfo(data: Dictionary<String, AnyObject>) {
-        // If the user is being impersonated, do not track.
-        if (impersonationMode == true || data["impersonationMode"] != nil) {
-            print("Impersonation mode is on - will not track event");
-            return
+        let userStatus = self.updateUser(data: data)
+
+        // Finally, as long as the data was valid, track the user info update
+        if (userStatus == true) {
+            self.track(eventName: eventNames["updatedUserInfo"]!, eventDisplayName: "Updated User Information", data: data)
         }
-
-        // Ensure that we have a user ID from data.userAccount.id
-        guard let userAccount = data["userAccount"] else {
-            print("data.userAccount is not defined")
-            return
-        }
-        guard let localUserID: Int = userAccount["id"] as? Int else {
-            print("data.userAccount.id is not defined")
-            return
-        }
-
-        // If we haven't saved the user ID globally, or the user IDs do not match
-        if (userId == nil || localUserID != userId) {
-            // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
-            if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
-                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
-                print("Retrieved anonymous user ID: \(anonymousId!)")
-            } else {
-                print("No anonymous ID has been saved. Generating...")
-                anonymousId = self.generateUUID()
-                print("Generated new anonymous user ID: \(anonymousId!)")
-                self.track(eventName: eventNames["brytescoreUUIDCreated"]!, eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
-            }
-
-            // Save our new user ID to our global userId
-            userId = localUserID
-
-            // Save our anonymous id and user id to local storage.
-            UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
-            UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
-        }
-
-        // Finally, in any case, track the user info update
-        self.track(eventName: eventNames["updatedUserInfo"]!, eventDisplayName: "Updated User Information", data: data)
     }
 
     /**
@@ -565,6 +498,49 @@ public class BrytescoreAPIManager {
 
         totalPageViewTime = totalPageViewTime + hearbeatLength
         self.track(eventName: eventNames["heartBeat"]!, eventDisplayName: "Heartbeat", data: ["elapsedTime": totalPageViewTime])
+    }
+
+    /**
+     *
+     */
+    private func updateUser(data: Dictionary<String, Any>) -> Bool {
+        // If the user is being impersonated, do not track.
+        if (impersonationMode == true || data["impersonationMode"] != nil) {
+            print("Impersonation mode is on - will not track event");
+            return false
+        }
+
+        // Ensure that we have a user ID from data.userAccount.id
+        guard let userAccount = data["userAccount"] as? Dictionary<String, Int> else {
+            print("data.userAccount is not defined")
+            return false
+        }
+        guard let localUserID: Int = userAccount["id"] else {
+            print("data.userAccount.id is not defined")
+            return false
+        }
+
+        // If we haven't saved the user ID globally, or the user IDs do not match
+        if (userId == nil || localUserID != userId) {
+            // Retrieve anonymous user ID from brytescore_uu_aid, or generate a new anonymous user ID
+            if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
+                anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
+                print("Retrieved anonymous user ID: \(anonymousId!)")
+            } else {
+                print("No anonymous ID has been saved. Generating...")
+                anonymousId = self.generateUUID()
+                print("Generated new anonymous user ID: \(anonymousId!)")
+                self.track(eventName: eventNames["brytescoreUUIDCreated"]!, eventDisplayName: "New user id Created", data: ["anonymousId": anonymousId!])
+            }
+
+            // Save our new user ID to our global userId
+            userId = localUserID
+
+            // Save our anonymous id and user id to local storage.
+            UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
+            UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
+        }
+        return true
     }
 
     /**
