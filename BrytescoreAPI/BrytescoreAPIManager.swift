@@ -8,32 +8,42 @@
 
 public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
+    // Variables used to fill event data for tracking
     private let _url = "https://api.brytecore.com"
     private let pageViewEventName = "pageView"
     private let heartBeatEventName = "heartBeat"
     private let hostname = "com.brytecore.mobile"
     private let library = "iOS"
     private let libraryVersion = "0.0.0"
-    private let schemaVersion = ["analytics": "0.3.1"]
-
 
     // --------------------------------- MARK: dynamic variables -------------------------------- //
     private var _apiKey = String()
+
+    // Variables to hold package-wide IDs
     private var userId : Int?  = nil
     private var anonymousId : String? = nil
     private var sessionId : String? = nil
     private var pageViewId : String? = nil
-    private var devMode = false
-    private var debugMode = false
-    private var impersonationMode = false
-    private var validationMode = false
-    private var totalPageViewTime : TimeInterval = 0
+
+    // Variables used to fill event data for tracking
+    // When additional packages are loaded, they are added to this dictionary
+    private var schemaVersion = ["analytics": "0.3.1"]
+
+    // Inactivity timers TODO maybe just status, not timer?
     private var inactivityId : Int = 0
 
+    // Variables for heartbeat timer
     private var heartbeatTimer = Timer()
     private var isHearbeatTimerRunning = false
     private var hearbeatLength : TimeInterval = 15 // in seconds
     private var startHeartbeatTime = Date(timeIntervalSinceNow: 9999999)
+    private var totalPageViewTime : TimeInterval = 0
+
+    // Variables for mode statuses
+    private var devMode = false
+    private var debugMode = false
+    private var impersonationMode = false
+    private var validationMode = false
 
 
     // ---------------------------------- MARK: public methods: --------------------------------- //
