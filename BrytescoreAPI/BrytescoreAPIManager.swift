@@ -5,6 +5,32 @@
 //  Created by Emily Morehouse on 8/7/17.
 //
 //
+import Foundation
+
+// ----------------------------------- MARK: String extensions ---------------------------------- //
+extension String {
+    /**
+     * Capitalizes the first letter of a given string
+     */
+    func capitalizingFirstLetter() -> String {
+        let first = String(characters.prefix(1)).capitalized
+        let other = String(characters.dropFirst())
+        return first + other
+    }
+
+    /**
+     * Converts a string from 'snake_case' to 'camelCase'
+     * Does so by finding any underscores and capitalizing the next character
+     */
+    var underscoreToCamelCase: String {
+        let items = self.components(separatedBy: "_")
+        var camelCase = ""
+        items.enumerated().forEach {
+            camelCase += 0 == $0 ? $1 : $1.capitalizingFirstLetter()
+        }
+        return camelCase
+    }
+}
 
 public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
@@ -40,6 +66,9 @@ public class BrytescoreAPIManager {
     // Variables used to fill event data for tracking
     // When additional packages are loaded, they are added to this dictionary
     private var schemaVersion : Dictionary<String, String>  = ["analytics": "0.3.1"]
+
+    // Dynamically loaded packages
+    private var packageFunctions : Dictionary<String, AnyObject> = [:]
 
     // Inactivity timers TODO maybe just status, not timer?
     private var inactivityId : Int = 0
@@ -86,6 +115,80 @@ public class BrytescoreAPIManager {
     }
 
     /**
+     * Function to load json packages.
+     *
+     * @param {string} The name of the package.
+     */
+    public func load(package: String) {
+        print("Calling load: \(package)")
+        print("Loading \(_packageUrl)\(package)\(_packageName)...")
+
+        // Generate the request endpoint
+        let requestEndpoint: String = _packageUrl + package + _packageName
+        guard let url = URL(string: requestEndpoint) else {
+            print("Error: cannot create URL")
+            return
+        }
+
+         // Set up the URL request
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        // Set up the session
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+
+        let task = session.dataTask(with: request) {
+            (data, response, error) in
+
+            // Check for any explicit errors
+            guard error == nil else {
+                self.print("An error occurred while calling:", requestEndpoint, error as Any)
+                return
+            }
+
+            // Retrieve the HTTP response status code, check that it exists
+            let httpResponse = response as? HTTPURLResponse
+            guard let st = httpResponse?.statusCode else{
+                return
+            }
+
+            // Check that the response was not a 404 or 500 TODO should handle errors more gracefully
+            guard st != 404 && st != 500 else {
+                self.print("An error occurred while calling:", requestEndpoint, st)
+                return
+            }
+
+            // Check that data was received from the API
+            guard let responseData = data else {
+                self.print("An error occurred: did not receive data")
+                return
+            }
+
+            // Parse the API response data
+            do {
+                guard let responseJSON = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String: AnyObject] else {
+                    self.print("error trying to convert data to JSON")
+                    return
+                }
+                self.print("Call successful, response: \(responseJSON)")
+
+                // Get just the events object of the package
+                self.packageFunctions[package] = responseJSON["events"];
+
+                // Get the namespace of the package
+                let namespace = responseJSON["namespace"] as! String;
+                self.schemaVersion[namespace] = responseJSON["version"] as? String;
+
+            } catch  {
+                self.print("An error occured while trying to convert data to JSON")
+                return
+            }
+        }
+
+        task.resume()
+    }
+
+    /**
      Sets dev mode.
      Logs events to the console instead of sending to the API.
      Turning on dev mode automatically triggers debug mode.
@@ -129,6 +232,41 @@ public class BrytescoreAPIManager {
      */
     public func validationMode(enabled: Bool) {
         validationMode = enabled
+    }
+
+    /**
+     *
+     */
+    public func brytescore(property: String, data: Dictionary<String, Any>) {
+        print("Calling brytescore: \(property)")
+
+        // Ensure that a property is provided
+        guard (property.characters.count != 0) else {
+            print("Abandon ship! You must provide a tracking property.")
+            return
+        }
+
+        // Retrieve the namespace and function name, from property of format 'namespace.functionName'
+        let splitPackage = property.components(separatedBy: ".");
+        guard splitPackage.count == 2 else {
+            print("Invalid tracking property name received. Should be of the form: 'namespace.functionName'");
+            return
+        }
+        let namespace = splitPackage[0]
+        let functionName = splitPackage[1]
+
+        // Retrieve the function details from the loaded package, ensuring that it exists
+        guard let functionDetails = packageFunctions[namespace]![functionName.underscoreToCamelCase] as? Dictionary<String, String> else {
+            print("The \(namespace) package is not loaded, or \(functionName) is not a valid function name.");
+            return
+        }
+        guard let eventDisplayName = functionDetails["displayName"] else {
+            print("The function display name could not be loaded.");
+            return
+        }
+
+        // Track the validated listing.
+        self.track(eventName: property, eventDisplayName: eventDisplayName, data: data)
     }
 
     /**
@@ -349,6 +487,15 @@ public class BrytescoreAPIManager {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
+        // Deduce the schema version (namespace)
+        // Check if the property is of the format 'namespace.functionName'
+        // If so, replace the namespace
+        var namespace : String = "analytics"
+        let splitPackage = path.components(separatedBy: ".");
+        if splitPackage.count == 2 {
+            namespace = splitPackage[0]
+        }
+
         /**
          Generate the object to send to the API
 
@@ -376,7 +523,7 @@ public class BrytescoreAPIManager {
             "sessionId": sessionId ?? "",
             "library": library,
             "libraryVersion": libraryVersion,
-            "schemaVersion": schemaVersion["analytics"]!, // TODO: handle dynamic functions. check for '.' (see docstring above)
+            "schemaVersion": schemaVersion[namespace]!,
             "data": data
         ] as [String : Any]
 
