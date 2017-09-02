@@ -45,6 +45,7 @@ class ViewController: UIViewController {
 
         // Enable debug mode - turns on console logs
         _apiManager.debugMode(enabled: debugMode)
+        _apiManager.load(package: "realestate")
         toggleDebugModeButton.setTitle("Toggle Debug Mode: Turn \(debugMode ? "Off": "On")", for: .normal)
         toggleDebugModeButton.backgroundColor = debugMode ? orange : green
 
@@ -147,6 +148,21 @@ class ViewController: UIViewController {
         _apiManager.updatedUserInfo(data: updatedUserInfoData)
     }
 
+    @IBAction func trackREViewedListing(_ sender: UIButton) {
+        let viewedListingData = [
+            "price": 123456,
+            "mls_id": "string",
+            "street_address": "string",
+            "street_address_2": "string",
+            "city": "string",
+            "state_province": "string",
+            "postal_code": "string",
+            "latitude": "string",
+            "longitude": "string"
+        ] as [String : AnyObject]
+        _apiManager.brytescore(property: "realestate.viewed_listing", data: viewedListingData);
+    }
+    
     /**
      Toggle devMode bool, pass to _apiManager, update button title and color
 
