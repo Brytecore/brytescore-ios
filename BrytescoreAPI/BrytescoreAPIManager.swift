@@ -70,7 +70,7 @@ public class BrytescoreAPIManager {
     // Dynamically loaded packages
     private var packageFunctions : Dictionary<String, AnyObject> = [:]
 
-    // Inactivity timers TODO maybe just status, not timer?
+    // Inactivity timers
     private var inactivityId : Int = 0
 
     // Variables for heartbeat timer
@@ -152,7 +152,7 @@ public class BrytescoreAPIManager {
                 return
             }
 
-            // Check that the response was not a 404 or 500 TODO should handle errors more gracefully
+            // Check that the response was not a 404 or 500
             guard st != 404 && st != 500 else {
                 self.print("An error occurred while calling:", requestEndpoint, st)
                 return
@@ -288,11 +288,6 @@ public class BrytescoreAPIManager {
 
         totalPageViewTime = 0
         pageViewId = self.generateUUID()
-
-        // TODO: view metadata
-        // data.pageUrl = window.location.href;
-        // data.pageTitle = document.title;
-        // data.referrer = document.referrer;
 
         self.track(eventName: eventNames["pageView"]!, eventDisplayName: "Viewed a Page", data: data)
 
@@ -560,7 +555,7 @@ public class BrytescoreAPIManager {
                     return
                 }
 
-                // Check that the response was not a 404 or 500 TODO should handle errors more gracefully
+                // Check that the response was not a 404 or 500
                 guard st != 404 && st != 500 else {
                     self.print("An error occurred while calling:", requestEndpoint, st)
                     return
@@ -645,7 +640,6 @@ public class BrytescoreAPIManager {
     }
 
     /**
-     TODO
      - Ensure that the user is not being impersonated
      - Ensure that we have a user ID in the data parameter
      - Update the global `userId` if it is not accurate
