@@ -136,7 +136,7 @@ class ViewController: UIViewController {
     }
 
     /**
-     Example usage of tracking the when a user updates their information
+     Example usage of tracking when a user updates their information
      - parameter sender: UIButton
      */
     @IBAction func trackUpdatedUserInfo(_ sender: UIButton) {
@@ -162,7 +162,7 @@ class ViewController: UIViewController {
         ] as [String : AnyObject]
         _apiManager.brytescore(property: "realestate.viewed_listing", data: viewedListingData);
     }
-    
+
     /**
      Toggle devMode bool, pass to _apiManager, update button title and color
 
