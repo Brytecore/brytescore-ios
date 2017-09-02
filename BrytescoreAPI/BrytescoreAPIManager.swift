@@ -10,6 +10,8 @@ public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
     // Variables used to fill event data for tracking
     private let _url = "https://api.brytecore.com"
+    private let _packageUrl = "https://cdn.brytecore.com/packages/"
+    private let _packageName = "/package.json"
     private let hostname = "com.brytecore.mobile"
     private let library = "iOS"
     private let libraryVersion = "0.0.0"
@@ -219,6 +221,7 @@ public class BrytescoreAPIManager {
      * @param {object} data The account data.
      */
     public func updatedUserInfo(data: Dictionary<String, AnyObject>) {
+        print("updatedUserInfo: \(data)")
         let userStatus = self.updateUser(data: data)
 
         // Finally, as long as the data was valid, track the user info update
@@ -495,7 +498,10 @@ public class BrytescoreAPIManager {
     }
 
     /**
-     *
+     TODO
+     - Ensure that the user is not being impersonated
+     - Ensure that we have a user ID in the data parameter
+     - Update the global `userId` if it is not accurate
      */
     private func updateUser(data: Dictionary<String, Any>) -> Bool {
 
