@@ -1,0 +1,6 @@
+framework module BrytescoreAPI {
+  umbrella header "BrytescoreAPI-umbrella.h"
+
+  export *
+  module * { export * }
+}

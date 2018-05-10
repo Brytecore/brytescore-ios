@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="BrytescoreAPI_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eEm-4J-MYS">
+                                <rect key="frame" x="16" y="40" width="343" height="508.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brytescore API Example" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LDZ-Yr-gtP">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your API Key: Uninitialized, need to call .init()." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dD-I6-X8l">
+                                        <rect key="frame" x="0.0" y="28.5" width="343" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use the following buttons to trigger various API calls:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fS-tp-BtV">
+                                        <rect key="frame" x="0.0" y="54.5" width="343" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOH-14-bdf">
+                                        <rect key="frame" x="0.0" y="98.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.15294117647058825" green="0.66274509803921566" blue="0.8784313725490196" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Track Page View"/>
+                                        <connections>
+                                            <action selector="trackPageView:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Orl-PR-w7S"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBa-ZT-kam">
+                                        <rect key="frame" x="0.0" y="136.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.15294117647058825" green="0.66274509803921566" blue="0.8784313725490196" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Track Registered Account"/>
+                                        <connections>
+                                            <action selector="trackRegisteredAccount:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="g70-GN-3I7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qju-e9-HYa">
+                                        <rect key="frame" x="0.0" y="174.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.66274509800000003" blue="0.87843137250000003" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Track Authenticated"/>
+                                        <connections>
+                                            <action selector="trackAuthenticated:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FsD-jx-8iQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8P9-0O-anI">
+                                        <rect key="frame" x="0.0" y="212.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.66274509800000003" blue="0.87843137250000003" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Track Submitted Form"/>
+                                        <connections>
+                                            <action selector="trackSubmittedForm:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yCp-V0-UcZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-vU-Y3w">
+                                        <rect key="frame" x="0.0" y="250.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.66274509800000003" blue="0.87843137250000003" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Track Started Chat"/>
+                                        <connections>
+                                            <action selector="trackStartedChat:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="MXW-Fv-FHG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyJ-Om-rKG">
+                                        <rect key="frame" x="0.0" y="288.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.66274509800000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <state key="normal" title="Track Updated User Info">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="trackUpdatedUserInfo:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="9rs-OC-Pi9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8n-qT-JbN">
+                                        <rect key="frame" x="0.0" y="326.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.66274509800000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Track Real Estate - Viewed Listing"/>
+                                        <connections>
+                                            <action selector="trackREViewedListing:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0Kn-IN-06N"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGW-if-6S0">
+                                        <rect key="frame" x="0.0" y="364.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Toggle Dev Mode: Turn On"/>
+                                        <connections>
+                                            <action selector="toggleDevMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Lwv-8d-1Hm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hR6-7O-nLT">
+                                        <rect key="frame" x="0.0" y="402.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Toggle Debug Mode: Turn On"/>
+                                        <connections>
+                                            <action selector="toggleDebugMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="mPh-Rf-5il"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1FX-5w-mqN">
+                                        <rect key="frame" x="0.0" y="440.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <state key="normal" title="Toggle Impersonation Mode: Turn On">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleImpersonationMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="kkt-2G-J1q"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFd-5T-Zgy">
+                                        <rect key="frame" x="0.0" y="478.5" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.094117647060000004" green="0.75294117650000003" blue="0.86666666670000003" alpha="0.21971280809999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                        <state key="normal" title="Toggle Validation Mode: Turn On">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleValidationMode:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Pyk-xm-0gt"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eEm-4J-MYS" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="IOg-1k-JHH"/>
+                            <constraint firstItem="eEm-4J-MYS" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="anR-nQ-HIu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eEm-4J-MYS" secondAttribute="trailing" id="wpD-73-Av1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="apiKeyLabel" destination="5dD-I6-X8l" id="Jqz-LM-lvO"/>
+                        <outlet property="toggleDebugModeButton" destination="hR6-7O-nLT" id="r4g-Eo-Nnx"/>
+                        <outlet property="toggleDevModeButton" destination="vGW-if-6S0" id="74f-GO-G6K"/>
+                        <outlet property="toggleImpersonationModeButton" destination="1FX-5w-mqN" id="khR-qV-hja"/>
+                        <outlet property="toggleValidationModeButton" destination="oFd-5T-Zgy" id="wep-se-zkR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140" y="138.98050974512745"/>
+        </scene>
+    </scenes>
+</document>
