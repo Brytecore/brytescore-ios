@@ -2,11 +2,6 @@
 
 # brytescore-ios
 
-[![Build Status](http://img.shields.io/travis/Brytecore/BrytescoreAPI.svg?branch=master?style=flat)](https://travis-ci.org/Brytecore/BrytescoreAPI)
-[![Version](https://img.shields.io/cocoapods/v/BrytescoreAPI.svg?style=flat)](http://cocoapods.org/pods/BrytescoreAPI)
-[![License](https://img.shields.io/cocoapods/l/BrytescoreAPI.svg?style=flat)](http://cocoapods.org/pods/BrytescoreAPI)
-[![Platform](https://img.shields.io/cocoapods/p/BrytescoreAPI.svg?style=flat)](http://cocoapods.org/pods/BrytescoreAPI)
-
 brytescore-ios is the open-source iOS SDK that connects your website with the Brytescore API. The
 Brytescore API allows you to track your users' behavior and score their engagement.
 
@@ -20,12 +15,13 @@ brytescore-ios is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "BrytescoreAPI"
+pod "Brytescore"
 ```
 
 ## Methods
 
-#### Initialization
+### Initialization
+
 Sets the API key.
 Generates a new unique session ID.
 Retrieves the saved user ID, if any.
@@ -36,7 +32,8 @@ Retrieves the saved user ID, if any.
     let _apiManager = BrytescoreAPIManager(apiKey: "<api-key>")
 ```
 
-#### getAPIKey
+### getAPIKey
+
 Returns the current API key
 
 - returns: The current API key
@@ -45,7 +42,8 @@ Returns the current API key
     _apiManager.getAPIKey()
 ```
 
-#### load
+### load
+
 Function to load json packages.
 
 - parameter {string} The name of the package.
@@ -54,7 +52,8 @@ Function to load json packages.
     _apiManager.load(package: "realestate")
 ```
 
-#### devMode
+### devMode
+
 Sets dev mode.
 Logs events to the console instead of sending to the API.
 Turning on dev mode automatically triggers debug mode.
@@ -65,7 +64,8 @@ Turning on dev mode automatically triggers debug mode.
     _apiManager.devMode(enabled: devMode)
 ```
 
-#### debugMode
+### debugMode
+
 Sets debug mode.
 Log events are suppressed when debug mode is off.
 
@@ -75,7 +75,8 @@ Log events are suppressed when debug mode is off.
     _apiManager.debugMode(enabled: debugMode)
 ```
 
-#### impersonationMode
+### impersonationMode
+
 Sets impersonation mode.
 Bypasses sending information to the API when impersonating another user.
 
@@ -85,7 +86,8 @@ Bypasses sending information to the API when impersonating another user.
     _apiManager.impersonationMode(enabled: impersonationMode)
 ```
 
-#### validationMode
+### validationMode
+
 Sets validation mode.
 Adds a validation attribute to the data for all API calls.
 
@@ -95,7 +97,12 @@ Adds a validation attribute to the data for all API calls.
     _apiManager.validationMode(enabled: validationMode)
 ```
 
-#### pageView
+### brytescore
+
+TODO
+
+### pageView
+
 Start a pageView.
 
 - parameter data: The pageView data.
@@ -108,7 +115,8 @@ Start a pageView.
     _apiManager.pageView(data: [:])
 ```
 
-#### registeredAccount
+### registeredAccount
+
 Sends a new account registration event.
 
 - parameter data: The registration data.
@@ -119,7 +127,8 @@ Sends a new account registration event.
     _apiManager.registeredAccount(data: registrationData)
 ```
 
-#### submittedForm
+### submittedForm
+
 Sends a submittedForm event.
 
 - parameter data: The chat data.
@@ -129,7 +138,8 @@ Sends a submittedForm event.
     _apiManager.submittedForm(data: submittedFormData)
 ```
 
-#### startedChat
+### startedChat
+
 Sends a startedChat event.
 
 - parameter data: The form data.
@@ -139,7 +149,8 @@ Sends a startedChat event.
     _apiManager.startedChat(data: startedChatData)
 ```
 
-#### updatedUserInfo
+### updatedUserInfo
+
 Updates a user's account information.
 
 - parameter data: The account data.
@@ -148,7 +159,8 @@ Updates a user's account information.
     _apiManager.updatedUserInfo(data: updatedUserInfoData)
 ```
 
-#### authenticated
+### authenticated
+
 Sends a user authentication event.
 
 - parameter data: The authentication data.
@@ -160,7 +172,8 @@ Sends a user authentication event.
     _apiManager.authenticated(data: authenticatedData)
 ```
 
-#### killSession
+### killSession
+
 Kills the session.
 
 ```swift
