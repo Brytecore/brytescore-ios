@@ -35,7 +35,7 @@ extension String {
 public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
     // Variables used to fill event data for tracking
-    private let _url = "https://api.brytecore.com"
+    private let _url = "https://api.brytecore.com/"
     private let _packageUrl = "https://cdn.brytecore.com/packages/"
     private let _packageName = "/package.json"
     private let hostname = "com.brytecore.mobile"
@@ -467,7 +467,7 @@ public class BrytescoreAPIManager {
         print("Calling sendRequest: path \(path) eventName \(eventName) eventDisplayName \(eventDisplayName)")
 
         // Generate the request endpoint
-        let requestEndpoint: String = _url + "/" + path
+        let requestEndpoint: String = _url + path
         guard let url = URL(string: requestEndpoint) else {
             print("Error: cannot create URL")
             return
