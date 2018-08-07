@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 
     // ------------------------------------- MARK: Variables ------------------------------------ //
     // Initialize the API Manager with your API key.
-    let _apiManager = BrytescoreAPIManager(apiKey: "107e322f-3410-4d5b-8f43-d2bad8141771")
+    let _apiManager = BrytescoreAPIManager(apiKey: "abc123")
 
     // Bools for local status of dev and debug mode, used to toggle state with buttons
     var devMode = true
