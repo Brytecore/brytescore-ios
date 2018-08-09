@@ -95,6 +95,16 @@ Adds a validation attribute to the data for all API calls.
     _apiManager.validationMode(enabled: validationMode)
 ```
 
+#### brytescore
+Start tracking a property specific to a loaded package.
+
+- parameter property: The property name
+- parameter data: The property tracking data
+
+```swift
+    _apiManager.brytescore(property: propertyName, data: propertyData)
+```
+
 #### pageView
 Start a pageView.
 

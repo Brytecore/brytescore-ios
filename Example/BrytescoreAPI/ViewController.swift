@@ -144,7 +144,7 @@ class ViewController: UIViewController {
             "userAccount": [
                 "id": 2
             ]
-            ] as [String : AnyObject]
+        ] as [String : AnyObject]
         _apiManager.updatedUserInfo(data: updatedUserInfoData)
     }
 
@@ -160,7 +160,7 @@ class ViewController: UIViewController {
             "latitude": "string",
             "longitude": "string"
         ] as [String : AnyObject]
-        _apiManager.brytescore(property: "realestate.viewed_listing", data: viewedListingData);
+        _apiManager.brytescore(property: "realestate.viewedListing", data: viewedListingData);
     }
 
     /**

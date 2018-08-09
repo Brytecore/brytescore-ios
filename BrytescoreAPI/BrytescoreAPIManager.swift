@@ -8,34 +8,35 @@
 import Foundation
 
 // ----------------------------------- MARK: String extensions ---------------------------------- //
-extension String {
-    /**
-     * Capitalizes the first letter of a given string
-     */
-    func capitalizingFirstLetter() -> String {
-        let first = String(characters.prefix(1)).capitalized
-        let other = String(characters.dropFirst())
-        return first + other
-    }
-
-    /**
-     * Converts a string from 'snake_case' to 'camelCase'
-     * Does so by finding any underscores and capitalizing the next character
-     */
-    var underscoreToCamelCase: String {
-        let items = self.components(separatedBy: "_")
-        var camelCase = ""
-        items.enumerated().forEach {
-            camelCase += 0 == $0 ? $1 : $1.capitalizingFirstLetter()
-        }
-        return camelCase
-    }
-}
+//extension String {
+//    /**
+//     * Capitalizes the first letter of a given string
+//     */
+//    func capitalizingFirstLetter() -> String {
+//        let first = String(characters.prefix(1)).capitalized
+//        let other = String(characters.dropFirst())
+//        return first + other
+//    }
+//
+//    /**
+//     * Converts a string from 'snake_case' to 'camelCase'
+//     * Does so by finding any underscores and capitalizing the next character
+//     */
+//    var underscoreToCamelCase: String {
+//        let items = self.components(separatedBy: "_")
+//        var camelCase = ""
+//        items.enumerated().forEach {
+//            camelCase += 0 == $0 ? $1 : $1.capitalizingFirstLetter()
+//        }
+//        return camelCase
+//    }
+//}
 
 public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
     // Variables used to fill event data for tracking
-    private let _url = "https://api.brytecore.com"
+//    private let _url = "https://api.brytecore.com"
+    private let _url = "http://127.0.0.1:5000/"
     private let _packageUrl = "https://cdn.brytecore.com/packages/"
     private let _packageName = "/package.json"
     private let hostname = "com.brytecore.mobile"
@@ -256,7 +257,7 @@ public class BrytescoreAPIManager {
         let functionName = splitPackage[1]
 
         // Retrieve the function details from the loaded package, ensuring that it exists
-        guard let functionDetails = packageFunctions[namespace]![functionName.underscoreToCamelCase] as? Dictionary<String, String> else {
+        guard let functionDetails = packageFunctions[namespace]![functionName] as? Dictionary<String, String> else {
             print("The \(namespace) package is not loaded, or \(functionName) is not a valid function name.");
             return
         }
@@ -357,6 +358,8 @@ public class BrytescoreAPIManager {
         print("updatedUserInfo: \(data)")
         let userStatus = self.updateUser(data: data)
 
+        //TODO: check if user is being impersonated
+        
         // Finally, as long as the data was valid, track the user info update
         if (userStatus == true) {
             self.track(eventName: eventNames["updatedUserInfo"]!, eventDisplayName: "Updated User Information", data: data)
@@ -481,6 +484,7 @@ public class BrytescoreAPIManager {
         // Set up the URL request
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         // Deduce the schema version (namespace)
         // Check if the property is of the format 'namespace.functionName'
@@ -489,6 +493,13 @@ public class BrytescoreAPIManager {
         let splitPackage = path.components(separatedBy: ".");
         if splitPackage.count == 2 {
             namespace = splitPackage[0]
+        }
+        
+        // Check if sessionId is set, if nil, generate a new one
+        if (sessionId == nil) {
+            // Generate new sessionId
+            sessionId = self.generateUUID()
+            UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
         }
 
         /**
@@ -533,7 +544,7 @@ public class BrytescoreAPIManager {
         } catch let error {
             print(error.localizedDescription)
         }
-
+        
         // Set up the session
         let session = URLSession(configuration: URLSessionConfiguration.default)
 
