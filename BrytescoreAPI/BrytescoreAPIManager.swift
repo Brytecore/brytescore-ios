@@ -7,31 +7,6 @@
 //
 import Foundation
 
-// ----------------------------------- MARK: String extensions ---------------------------------- //
-//extension String {
-//    /**
-//     * Capitalizes the first letter of a given string
-//     */
-//    func capitalizingFirstLetter() -> String {
-//        let first = String(characters.prefix(1)).capitalized
-//        let other = String(characters.dropFirst())
-//        return first + other
-//    }
-//
-//    /**
-//     * Converts a string from 'snake_case' to 'camelCase'
-//     * Does so by finding any underscores and capitalizing the next character
-//     */
-//    var underscoreToCamelCase: String {
-//        let items = self.components(separatedBy: "_")
-//        var camelCase = ""
-//        items.enumerated().forEach {
-//            camelCase += 0 == $0 ? $1 : $1.capitalizingFirstLetter()
-//        }
-//        return camelCase
-//    }
-//}
-
 public class BrytescoreAPIManager {
     // --------------------------------- MARK: static variables --------------------------------- //
     // Variables used to fill event data for tracking
