@@ -99,7 +99,14 @@ Adds a validation attribute to the data for all API calls.
 
 ### brytescore
 
-TODO
+Start tracking a property specific to a loaded package.
+
+- parameter property: The property name
+- parameter data: The property tracking data
+
+```swift
+    _apiManager.brytescore(property: propertyName, data: propertyData)
+```
 
 ### pageView
 
