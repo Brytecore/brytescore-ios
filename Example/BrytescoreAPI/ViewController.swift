@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     let _apiManager = BrytescoreAPIManager(apiKey: "abc123")
 
     // Bools for local status of dev and debug mode, used to toggle state with buttons
-    var devMode = true
+    var devMode = false
     var debugMode = true
     var impersonationMode = false
     var validationMode = false
