@@ -332,7 +332,10 @@ public class BrytescoreAPIManager {
         print("updatedUserInfo: \(data)")
         let userStatus = self.updateUser(data: data)
 
-        //TODO: check if user is being impersonated
+        // If the user is being impersonated, do not track.
+        guard checkImpersonation(data: data) else {
+            return
+        }
 
         // Finally, as long as the data was valid, track the user info update
         if (userStatus == true) {
