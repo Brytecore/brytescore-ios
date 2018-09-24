@@ -19,10 +19,10 @@ class ViewController: UIViewController {
 
     // ------------------------------------- MARK: Variables ------------------------------------ //
     // Initialize the API Manager with your API key.
-    let _apiManager = BrytescoreAPIManager(apiKey: "107e322f-3410-4d5b-8f43-d2bad8141771")
+    let _apiManager = BrytescoreAPIManager(apiKey: "abc123")
 
     // Bools for local status of dev and debug mode, used to toggle state with buttons
-    var devMode = true
+    var devMode = false
     var debugMode = true
     var impersonationMode = false
     var validationMode = false
@@ -144,7 +144,7 @@ class ViewController: UIViewController {
             "userAccount": [
                 "id": 2
             ]
-            ] as [String : AnyObject]
+        ] as [String : AnyObject]
         _apiManager.updatedUserInfo(data: updatedUserInfoData)
     }
 
@@ -160,7 +160,7 @@ class ViewController: UIViewController {
             "latitude": "string",
             "longitude": "string"
         ] as [String : AnyObject]
-        _apiManager.brytescore(property: "realestate.viewed_listing", data: viewedListingData);
+        _apiManager.brytescore(property: "realestate.viewedListing", data: viewedListingData);
     }
 
     /**
