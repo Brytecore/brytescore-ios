@@ -216,7 +216,7 @@ public class BrytescoreAPIManager {
         print("Calling brytescore: \(property)")
 
         // Ensure that a property is provided
-        guard (property.characters.count != 0) else {
+        guard (property.count != 0) else {
             print("Abandon ship! You must provide a tracking property.")
             return
         }
@@ -453,7 +453,7 @@ public class BrytescoreAPIManager {
             return
         }
 
-        guard (_apiKey.characters.count != 0) else {
+        guard (_apiKey.count != 0) else {
             print("Abandon ship! You must provide an API key.")
             return
         }
