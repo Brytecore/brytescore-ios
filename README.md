@@ -25,6 +25,17 @@ When importing into an Objective-C project, include the following at the top of 
 use_frameworks!
 ```
 
+## Import BrytescoreAPI
+
+#### Swift
+```swift
+    import BrytescoreAPI
+```
+
+#### Objective-C
+```objective-c
+    @import BrytescoreAPI;
+```
 
 ## Methods
 
@@ -36,12 +47,12 @@ Retrieves the saved user ID, if any.
 
 - parameter {string} The API key.
 
-####Swift
+#### Swift
 ```swift
     let _apiManager = BrytescoreAPIManager(apiKey: "<api-key>")
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     BrytescoreAPIManager *apiManager = [[BrytescoreAPIManager alloc] initWithApiKey: @"<api-key>"];
 ```
@@ -52,12 +63,12 @@ Returns the current API key
 
 - returns: The current API key
 
-####Swift
+#### Swift
 ```swift
     _apiManager.getAPIKey()
 ```
 
-####Objective-C
+#### Objective-C
 ```objetive-c
     [apiManager getAPIKey];
 ```
@@ -68,12 +79,12 @@ Function to load json packages.
 
 - parameter {string} The name of the package.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.load(package: "realestate")
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager loadWithPackage:@"realestate"];
 ```
@@ -86,12 +97,12 @@ Turning on dev mode automatically triggers debug mode.
 
 - parameter enabled: If true, then dev mode is enabled.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.devMode(enabled: devMode)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager devModeWithEnabled: devMode];
 ```
@@ -103,12 +114,12 @@ Log events are suppressed when debug mode is off.
 
 - parameter enabled: If true, then debug mode is enabled.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.debugMode(enabled: debugMode)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager debugModeWithEnabled: debugMode];
 ```
@@ -120,12 +131,12 @@ Bypasses sending information to the API when impersonating another user.
 
 - parameter enabled: If true, then impersonation mode is enabled.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.impersonationMode(enabled: impersonationMode)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager impersonationModeWithEnabled: impersonationMode];
 ```
@@ -137,12 +148,12 @@ Adds a validation attribute to the data for all API calls.
 
 - parameter enabled: If true, then validation mode is enabled.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.validationMode(enabled: validationMode)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager validationModeWithEnabled: validationMode];
 ```
@@ -154,12 +165,12 @@ Start tracking a property specific to a loaded package.
 - parameter property: The property name
 - parameter data: The property tracking data
 
-####Swift
+#### Swift
 ```swift
     _apiManager.brytescore(property: propertyName, data: propertyData)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager brytescoreWithProperty: propertyName data: propertyData];
 ```
@@ -174,12 +185,12 @@ Start a pageView.
 - data.pageTitle
 - data.referrer
 
-####Swift
+#### Swift
 ```swift
     _apiManager.pageView(data: [:])
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager pageViewWithData: [NSDictionary dictionary]];
 ```
@@ -192,12 +203,12 @@ Sends a new account registration event.
 - data.isImpersonating
 - data.userAccount.id
 
-####Swift
+#### Swift
 ```swift
     _apiManager.registeredAccount(data: registrationData)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager registeredAccountWithData: registrationData];
 ```
@@ -209,12 +220,12 @@ Sends a submittedForm event.
 - parameter data: The chat data.
 - data.isImpersonating
 
-####Swift
+#### Swift
 ```swift
     _apiManager.submittedForm(data: submittedFormData)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager submittedFormWithData: submittedFormData];
 ```
@@ -226,12 +237,12 @@ Sends a startedChat event.
 - parameter data: The form data.
 - data.isImpersonating
 
-####Swift
+#### Swift
 ```swift
     _apiManager.startedChat(data: startedChatData)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
 [apiManager startedChartWithData: startedChatData];
 ```
@@ -242,12 +253,12 @@ Updates a user's account information.
 
 - parameter data: The account data.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.updatedUserInfo(data: updatedUserInfoData)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager updatedUserInfoWithData: updatedUserInfoData];
 ```
@@ -261,12 +272,12 @@ Sends a user authentication event.
 - data.userAccount
 - data.userAccount.id
 
-####Swift
+#### Swift
 ```swift
     _apiManager.authenticated(data: authenticatedData)
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager authenticatedWithData: authenticatedData];
 ```
@@ -275,12 +286,12 @@ Sends a user authentication event.
 
 Kills the session.
 
-####Swift
+#### Swift
 ```swift
     _apiManager.killSession()
 ```
 
-####Objective-C
+#### Objective-C
 ```objective-c
     [apiManager killSession];
 ```
