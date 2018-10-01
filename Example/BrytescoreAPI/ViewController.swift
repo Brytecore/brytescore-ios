@@ -63,11 +63,11 @@ class ViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
     }
 
-    func appMovedToBackground() {
+    @objc func appMovedToBackground() {
         _apiManager.killSession()
     }
 
-    func appMovedToForeground() {
+    @objc func appMovedToForeground() {
         _apiManager.pageView(data: [:])
     }
 

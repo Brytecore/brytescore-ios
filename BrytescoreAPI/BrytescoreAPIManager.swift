@@ -7,7 +7,8 @@
 //
 import Foundation
 
-public class BrytescoreAPIManager {
+@objc
+public class BrytescoreAPIManager: NSObject {
     // --------------------------------- MARK: static variables --------------------------------- //
     // Variables used to fill event data for tracking
     private let _url = "https://api.brytecore.com/"
@@ -69,9 +70,11 @@ public class BrytescoreAPIManager {
 
      - parameter apiKey: The API key.
      */
+    @objc
     public init(apiKey: String) {
         _apiKey = apiKey
-
+        super.init()
+        
         // Generate and save unique session ID
         sessionId = self.generateUUID()
         UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
@@ -85,6 +88,7 @@ public class BrytescoreAPIManager {
 
      - returns: The current API key
      */
+    @objc
     public func getAPIKey() -> String {
         return _apiKey
     }
@@ -94,6 +98,7 @@ public class BrytescoreAPIManager {
      *
      * @param {string} The name of the package.
      */
+    @objc
     public func load(package: String) {
         print("Calling load: \(package)")
         print("Loading \(_packageUrl)\(package)\(_packageName)...")
@@ -170,6 +175,7 @@ public class BrytescoreAPIManager {
 
      - parameter enabled: If true, then dev mode is enabled.
      */
+    @objc
     public func devMode(enabled: Bool) {
         devMode = enabled
 
@@ -185,6 +191,7 @@ public class BrytescoreAPIManager {
 
      - parameter enabled: If true, then debug mode is enabled.
      */
+    @objc
     public func debugMode(enabled: Bool) {
         debugMode = enabled
     }
@@ -195,6 +202,7 @@ public class BrytescoreAPIManager {
 
      - parameter enabled: If true, then impersonation mode is enabled.
      */
+    @objc
     public func impersonationMode(enabled: Bool) {
         impersonationMode = enabled
     }
@@ -205,6 +213,7 @@ public class BrytescoreAPIManager {
 
      - parameter enabled: If true, then validation mode is enabled.
      */
+    @objc
     public func validationMode(enabled: Bool) {
         validationMode = enabled
     }
@@ -212,6 +221,7 @@ public class BrytescoreAPIManager {
     /**
      *
      */
+    @objc
     public func brytescore(property: String, data: Dictionary<String, Any>) {
         print("Calling brytescore: \(property)")
 
@@ -253,6 +263,7 @@ public class BrytescoreAPIManager {
      - data.pageTitle:
      - data.referrer:
      */
+    @objc
     public func pageView(data: Dictionary<String, Any>) {
         print("Calling pageView: \(data)")
 
@@ -283,6 +294,7 @@ public class BrytescoreAPIManager {
      - data.isImpersonating
      - data.userAccount.id
      */
+    @objc
     public func registeredAccount(data: Dictionary<String, AnyObject>) {
         print("Calling registeredAccount: \(data)")
         let userStatus = self.updateUser(data: data)
@@ -299,6 +311,7 @@ public class BrytescoreAPIManager {
      - parameter data: The chat data.
      - data.isImpersonating
      */
+    @objc
     public func submittedForm( data: Dictionary<String, AnyObject>) {
         // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
@@ -314,6 +327,7 @@ public class BrytescoreAPIManager {
      - parameter data: The form data.
      - data.isImpersonating
      */
+    @objc
     public func startedChat( data: Dictionary<String, AnyObject>) {
         // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
@@ -328,6 +342,7 @@ public class BrytescoreAPIManager {
      *
      * @param {object} data The account data.
      */
+    @objc
     public func updatedUserInfo(data: Dictionary<String, AnyObject>) {
         print("updatedUserInfo: \(data)")
         let userStatus = self.updateUser(data: data)
@@ -351,6 +366,7 @@ public class BrytescoreAPIManager {
      - data.userAccount
      - data.userAccount.id
      */
+    @objc
     public func authenticated(data: Dictionary<String, AnyObject>) {
         // If the user is being impersonated, do not track.
         guard checkImpersonation(data: data) else {
@@ -398,6 +414,7 @@ public class BrytescoreAPIManager {
     /**
      * Kills the session.
      */
+    @objc
     public func killSession() {
         print("Calling killSession")
 
