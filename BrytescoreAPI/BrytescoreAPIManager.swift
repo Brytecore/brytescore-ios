@@ -385,11 +385,11 @@ public class BrytescoreAPIManager: NSObject {
         }
 
         // Ensure that we have a user ID from data.userAccount.id
-        guard let userAccount = data["userAccount"] as? Dictionary<String, Int> else {
+        guard let userAccount = data["userAccount"] as? Dictionary<String, AnyObject> else {
             print("data.userAccount is not defined")
             return
         }
-        guard let newUserId: Int = userAccount["id"] else {
+        guard let newUserId: Int = userAccount["id"] as! Int? else {
             print("data.userAccount.id is not defined")
             return
         }
@@ -668,11 +668,11 @@ public class BrytescoreAPIManager: NSObject {
         }
 
         // Ensure that we have a user ID from data.userAccount.id
-        guard let userAccount = data["userAccount"] as? Dictionary<String, Int> else {
+        guard let userAccount = data["userAccount"] as? Dictionary<String, AnyObject> else {
             print("data.userAccount is not defined")
             return false
         }
-        guard let localUserID: Int = userAccount["id"] else {
+        guard let localUserID: Int = userAccount["id"] as! Int? else {
             print("data.userAccount.id is not defined")
             return false
         }
