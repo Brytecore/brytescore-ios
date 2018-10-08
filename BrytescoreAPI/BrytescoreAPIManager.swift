@@ -81,6 +81,17 @@ public class BrytescoreAPIManager: NSObject {
 
         // Retrieve user ID from brytescore_uu_uid
         userId = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as? Int
+        
+        // Check if we have an existing aid, otherwise generate
+        if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
+            anonymousId = UserDefaults.standard.object(forKey: "brytescore_uu_aid") as? String
+            print("Retrieved anonymous user ID: \(anonymousId!)")
+        } else {
+            anonymousId = generateUUID()
+            print("Generated anonymous user ID: \(anonymousId!)")
+        }
+        
+        UserDefaults.standard.set(anonymousId, forKey: "brytescore_uu_aid")
     }
 
     /**
