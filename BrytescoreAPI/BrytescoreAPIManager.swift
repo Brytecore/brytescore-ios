@@ -16,7 +16,7 @@ public class BrytescoreAPIManager: NSObject {
     private let _packageName = "/package.json"
     private let hostname = "com.brytecore.mobile"
     private let library = "iOS"
-    private let libraryVersion = "0.0.0"
+    private let libraryVersion = "1.4.0"
 
     private let eventNames = [
         "authenticated": "authenticated",
