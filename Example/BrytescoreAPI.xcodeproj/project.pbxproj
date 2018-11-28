@@ -41,6 +41,7 @@
 		607FACE51AFB9204008FA782 /* BrytescoreAPI_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrytescoreAPI_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		743BD1B221AF09EB00F261CC /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		83D103B266912F67DCD129F1 /* Pods_BrytescoreAPI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BrytescoreAPI_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6EBBAF04DDB138CB0896333 /* Pods-BrytescoreAPI_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrytescoreAPI_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BrytescoreAPI_Example/Pods-BrytescoreAPI_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		ABE9F98A8FF9AFF3CDA6E0A3 /* Pods_BrytescoreAPI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BrytescoreAPI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +136,7 @@
 				BFE9C5A8139CB8EC8AC39D98 /* BrytescoreAPI.podspec */,
 				343F8B9094F7399411685EF7 /* README.md */,
 				F1986B9749212678BA93C86A /* LICENSE */,
+				743BD1B221AF09EB00F261CC /* CHANGELOG.md */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
