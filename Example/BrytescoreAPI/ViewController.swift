@@ -89,7 +89,7 @@ class ViewController: UIViewController {
         let registrationData = [
             "isLead": false,
             "userAccount": [
-                "id": 2
+                "id": "2"
             ]
         ] as [String : AnyObject]
         _apiManager.registeredAccount(data: registrationData)
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
     @IBAction func trackAuthenticated(_ sender: UIButton) {
         let authenticatedData = [
             "userAccount": [
-                "id": 2
+                "id": "2"
             ]
         ] as [String : AnyObject]
         _apiManager.authenticated(data: authenticatedData)
@@ -116,7 +116,7 @@ class ViewController: UIViewController {
     @IBAction func trackSubmittedForm(_ sender: UIButton) {
         let submittedFormData = [
             "userAccount": [
-                "id": 2
+                "id": "2"
             ]
             ] as [String : AnyObject]
         _apiManager.submittedForm(data: submittedFormData)
@@ -129,7 +129,7 @@ class ViewController: UIViewController {
     @IBAction func trackStartedChat(_ sender: UIButton) {
         let startedChatData = [
             "userAccount": [
-                "id": 2
+                "id": "2"
             ]
             ] as [String : AnyObject]
         _apiManager.startedChat(data: startedChatData)
@@ -142,7 +142,7 @@ class ViewController: UIViewController {
     @IBAction func trackUpdatedUserInfo(_ sender: UIButton) {
         let updatedUserInfoData = [
             "userAccount": [
-                "id": 2
+                "id": "2"
             ]
         ] as [String : AnyObject]
         _apiManager.updatedUserInfo(data: updatedUserInfoData)

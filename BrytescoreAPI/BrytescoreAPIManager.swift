@@ -34,7 +34,7 @@ public class BrytescoreAPIManager: NSObject {
     private var _apiKey : String
 
     // Variables to hold package-wide IDs
-    private var userId : Int?  = nil
+    private var userId : String?  = nil
     private var anonymousId : String? = nil
     private var sessionId : String? = nil
     private var pageViewId : String? = nil
@@ -79,8 +79,9 @@ public class BrytescoreAPIManager: NSObject {
         sessionId = self.generateUUID()
         UserDefaults.standard.set(sessionId, forKey: "brytescore_session_sid")
 
-        // Retrieve user ID from brytescore_uu_uid
-        userId = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as? Int
+        // Retrieve user ID from brytescore_uu_uid and update it in case its retrieved as Int
+        userId = String(describing: UserDefaults.standard.object(forKey: "brytescore_uu_uid")!)
+        UserDefaults.standard.set(userId, forKey: "brytescore_uu_uid")
         
         // Check if we have an existing aid, otherwise generate
         if (UserDefaults.standard.object(forKey: "brytescore_uu_aid") != nil) {
@@ -389,7 +390,7 @@ public class BrytescoreAPIManager: NSObject {
             print("data.userAccount is not defined")
             return
         }
-        guard let newUserId: Int = userAccount["id"] as! Int? else {
+        guard let newUserId: String = userAccount["id"] as? String else {
             print("data.userAccount.id is not defined")
             return
         }
@@ -403,9 +404,9 @@ public class BrytescoreAPIManager: NSObject {
         }
 
         // Retrieve user ID from brytescore_uu_uid
-        var storedUserID : Int? = nil
+        var storedUserID : String? = nil
         if (UserDefaults.standard.object(forKey: "brytescore_uu_uid") != nil) {
-            storedUserID = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as? Int
+            storedUserID = UserDefaults.standard.object(forKey: "brytescore_uu_uid") as? String
             print("Retrieved user ID: \(storedUserID!)")
         }
 
@@ -619,7 +620,7 @@ public class BrytescoreAPIManager: NSObject {
 
      - parameter userID: The user ID.
      */
-    private func changeLoggedInUser(userID: Int) {
+    private func changeLoggedInUser(userID: String) {
         // Kill current session for old user
         self.killSession()
 
@@ -672,7 +673,7 @@ public class BrytescoreAPIManager: NSObject {
             print("data.userAccount is not defined")
             return false
         }
-        guard let localUserID: Int = userAccount["id"] as! Int? else {
+        guard let localUserID: String = userAccount["id"] as! String? else {
             print("data.userAccount.id is not defined")
             return false
         }
